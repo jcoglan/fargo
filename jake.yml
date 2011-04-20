@@ -16,14 +16,7 @@ packages:
   fargo:
     - fargo
     - fargo/scheme
-    - fargo/scheme/boolean
-    - fargo/scheme/cell
-    - fargo/scheme/datum
-    - fargo/scheme/list
-    - fargo/scheme/number
-    - fargo/scheme/program
-    - fargo/scheme/string
-    - fargo/scheme/symbol
+    - fargo/scheme_nodes
     - fargo/runtime/callable/function
     - fargo/runtime/callable/syntax
     - fargo/runtime/data/cons
