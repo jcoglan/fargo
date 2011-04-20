@@ -13,5 +13,5 @@ fs.readFile(process.ARGV[2], function(err, source) {
   var program = Fargo.SchemeParser.parse(source.toString()),
       scope   = new Fargo.Runtime.TopLevel();
   
-  sys.puts(program.eval(scope));
+  program.eval(scope);
 });

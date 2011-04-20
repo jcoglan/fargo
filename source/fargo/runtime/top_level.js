@@ -12,6 +12,10 @@ Fargo.Runtime.extend({
         return Fargo.evaluate(which, scope);
       });
       
+      this.syntax('lambda', function(scope, cells) {
+        return new Fargo.Runtime.Function(scope, cells.car, cells.cdr);
+      });
+      
       this.define('+', function(a,b) { return a + b });
       this.define('-', function(a,b) { return a - b });
       this.define('*', function(a,b) { return a * b });
@@ -22,6 +26,8 @@ Fargo.Runtime.extend({
       this.define('>',  function(a,b) { return a >  b });
       this.define('>=', function(a,b) { return a >= b });
       this.define('=',  function(a,b) { return a === b });
+      
+      this.define('puts', function(string) { require('sys').puts(string) });
     }
   })
 });
