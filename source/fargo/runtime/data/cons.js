@@ -13,6 +13,10 @@ Fargo.Runtime.extend({
       return frame;
     },
     
+    freeze: function() {
+      this.frozen = true;
+    },
+    
     toString: function() {
       var elems  = [],
           cell   = this,

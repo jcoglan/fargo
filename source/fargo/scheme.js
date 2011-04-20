@@ -281,8 +281,16 @@ Fargo.Scheme = new JS.Module("Fargo.Scheme", {
         }
         if (elements0) {
             this._offset = index2;
-            var klass0 = this.klass.SyntaxNode;
+            var klass0 = null;
+            if (Fargo.Scheme.QuotedCell instanceof Function) {
+                klass0 = Fargo.Scheme.QuotedCell;
+            } else {
+                klass0 = this.klass.SyntaxNode;
+            }
             address0 = new klass0(text0, this._offset, elements0, labelled0);
+            if (!(Fargo.Scheme.QuotedCell instanceof Function)) {
+                address0.extend(Fargo.Scheme.QuotedCell);
+            }
             this._offset += text0.length;
         } else {
             address0 = null;

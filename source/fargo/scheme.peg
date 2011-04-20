@@ -4,7 +4,7 @@ grammar Fargo.Scheme
   
   shebang   <- space* "#!" (![\n\r] .)*
   
-  cell      <- ignore quote cell
+  cell      <- ignore quote cell <Fargo.Scheme.QuotedCell>
              / ignore (list / vector / atom) ignore <Fargo.Scheme.Cell>
   
   quote     <- "'" / "`" / ",@" / ","

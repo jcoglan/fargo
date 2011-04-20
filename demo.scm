@@ -11,3 +11,9 @@
     (+ a b))))
 
 (puts ((add 2) 3))
+
+(puts '(a b c))
+(puts (cdr '(a b c)))
+
+(define list '(1 2 3))
+(set-car! list 4)

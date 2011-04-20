@@ -28,6 +28,23 @@ Fargo.Runtime.extend({
       this.define('=',  function(a,b) { return a === b });
       
       this.define('puts', function(string) { require('sys').puts(string) });
+      
+      this.syntax('quote', function(scope, cells) {
+        return Fargo.freeze(cells.car);
+      });
+      
+      this.define('car', function(pair) { return pair.car });
+      this.define('cdr', function(pair) { return pair.cdr });
+      
+      this.define('set-car!', function(pair, value) {
+        if (pair.frozen) throw new Error('Cannot set-car! on immutable list');
+        pair.car = value;
+      });
+      
+      this.define('set-cdr!', function(pair, value) {
+        if (pair.frozen) throw new Error('Cannot set-cdr! on immutable list');
+        pair.cdr = value;
+      });
     }
   })
 });

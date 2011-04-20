@@ -24,6 +24,15 @@ Fargo.Scheme.Program = new JS.Module({
   }
 });
 
+Fargo.Scheme.QuotedCell = new JS.Module({
+  convert: function() {
+    var runtime = Fargo.Runtime;
+    return new runtime.Cons(new runtime.Symbol('quote'),
+           new runtime.Cons(this.cell.convert(),
+                            runtime.Cons.NULL));
+  }
+});
+
 Fargo.Scheme.Cell = new JS.Module({
   convert: function() {
     return this.elements[1].convert();
