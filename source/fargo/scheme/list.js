@@ -1,11 +1,8 @@
 Fargo.Scheme.List = new JS.Module({
   eval: function(scope) {
-    var cells  = this.cells.elements,
-        values = [];
+    var cells = this.cells.elements,
+        proc  = cells[0].eval(scope);
     
-    for (var i = 0, n = cells.length; i < n; i++)
-      values.push(cells[i].eval(scope));
-    
-    return values[0].call(values.slice(1));
+    return proc.call(scope, cells.slice(1));
   }
 });
