@@ -1,0 +1,26 @@
+---
+source_directory:   source
+build_directory:    build
+layout:             together
+
+builds:
+  src:
+    suffix:         false
+    packer:         false
+  min:
+    shrink_vars:    true
+    private:        true
+
+packages:
+
+  fargo:
+    - fargo
+    - fargo/scheme
+    - fargo/scheme/boolean
+    - fargo/scheme/cell
+    - fargo/scheme/datum
+    - fargo/scheme/list
+    - fargo/scheme/number
+    - fargo/scheme/program
+    - fargo/scheme/string
+    - fargo/scheme/symbol
