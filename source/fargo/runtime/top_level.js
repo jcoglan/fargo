@@ -4,12 +4,12 @@ Fargo.Runtime.extend({
       this.callSuper();
       
       this.syntax('define', function(scope, cells) {
-        scope.define(cells[0].elements[1].textValue, cells[1].eval(scope));
+        scope.define(cells.car.name, Fargo.evaluate(cells.cdr.car, scope));
       });
       
       this.syntax('if', function(scope, cells) {
-        var which = cells[0].eval(scope) ? cells[1] : cells[2];
-        return which.eval(scope);
+        var which = Fargo.evaluate(cells.car, scope) ? cells.cdr.car : cells.cdr.cdr.car;
+        return Fargo.evaluate(which, scope);
       });
       
       this.define('+', function(a,b) { return a + b });

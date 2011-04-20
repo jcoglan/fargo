@@ -24,7 +24,9 @@ packages:
     - fargo/scheme/program
     - fargo/scheme/string
     - fargo/scheme/symbol
-    - fargo/runtime/function
-    - fargo/runtime/syntax
+    - fargo/runtime/callable/function
+    - fargo/runtime/callable/syntax
+    - fargo/runtime/data/cons
+    - fargo/runtime/data/symbol
     - fargo/runtime/scope
     - fargo/runtime/top_level

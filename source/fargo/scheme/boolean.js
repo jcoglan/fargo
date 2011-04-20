@@ -1,5 +1,5 @@
 Fargo.Scheme.Boolean = new JS.Module({
-  eval: function(scope) {
+  convert: function() {
     return this.textValue === '#t';
   }
 });

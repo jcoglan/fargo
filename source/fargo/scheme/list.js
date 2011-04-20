@@ -1,8 +1,13 @@
 Fargo.Scheme.List = new JS.Module({
-  eval: function(scope) {
-    var cells = this.cells.elements,
-        proc  = cells[0].eval(scope);
+  convert: function() {
+    if (this._ast) return this._ast;
     
-    return proc.call(scope, cells.slice(1));
+    var cells = this.cells.elements,
+        cons  = Fargo.Runtime.Cons,
+        list  = cons.NULL,
+        i = cells.length;
+    
+    while (i--) list = new cons(cells[i].convert(), list);
+    return this._ast = list;
   }
 });

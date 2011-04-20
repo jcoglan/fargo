@@ -1,5 +1,5 @@
 Fargo.Scheme.Number = new JS.Module({
-  eval: function(scope) {
+  convert: function() {
     return parseFloat(this.textValue, 10);
   }
 });

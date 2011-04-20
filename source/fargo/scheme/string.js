@@ -1,5 +1,5 @@
 Fargo.Scheme.String = new JS.Module({
-  eval: function(scope) {
+  convert: function() {
     return eval(this.textValue);
   }
 });

@@ -5,10 +5,14 @@ Fargo.Runtime.extend({
     },
     
     call: function(scope, cells) {
-      var args = [];
-    
-      for (var i = 0, n = cells.length; i < n; i++)
-        args.push(cells[i].eval(scope));
+      var args = [],
+          cell = cells,
+          nil  = Fargo.Runtime.Cons.NULL;
+      
+      while (cell !== nil) {
+        args.push(Fargo.evaluate(cell.car, scope));
+        cell = cell.cdr;
+      }
       
       return this._body.apply(this, args);
     }
