@@ -9,7 +9,7 @@ Fargo.Runtime.extend({
       
       this.syntax('if', function(scope, cells) {
         var which = Fargo.evaluate(cells.car, scope) ? cells.cdr.car : cells.cdr.cdr.car;
-        return Fargo.evaluate(which, scope);
+        return new Fargo.Runtime.Frame(which, scope);
       });
       
       this.syntax('lambda', function(scope, cells) {

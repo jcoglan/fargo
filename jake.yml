@@ -21,5 +21,6 @@ packages:
     - fargo/runtime/callable/syntax
     - fargo/runtime/data/cons
     - fargo/runtime/data/symbol
+    - fargo/runtime/frame
     - fargo/runtime/scope
     - fargo/runtime/top_level

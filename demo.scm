@@ -4,7 +4,7 @@
       (* (factorial (- x 1))
          x))))
 
-(puts (factorial 6))
+(puts (factorial 2000))
 
 (define add (lambda (a)
   (lambda (b)

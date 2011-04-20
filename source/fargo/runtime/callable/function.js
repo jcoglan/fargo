@@ -33,14 +33,13 @@ Fargo.Runtime.extend({
         i += 1;
       }
       
-      var expression = this._body,
-          value      = null;
+      var expression = this._body;
       
-      while (expression !== nil) {
-        value = Fargo.evaluate(expression.car, scope);
+      while (expression.cdr !== nil) {
+        Fargo.evaluate(expression.car, scope);
         expression = expression.cdr;
       }
-      return value;
+      return new Fargo.Runtime.Frame(expression.car, scope);
     }
   })
 });

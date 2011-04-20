@@ -6,8 +6,11 @@ Fargo.Runtime.extend({
     },
     
     eval: function(scope) {
-      var proc = Fargo.evaluate(this.car, scope);
-      return proc.call(scope, this.cdr);
+      var Frame = Fargo.Runtime.Frame,
+          frame = new Frame(this, scope);
+      
+      while (frame && frame.klass === Frame) frame = frame.iterate();
+      return frame;
     },
     
     toString: function() {
