@@ -5,6 +5,7 @@ Fargo.Runtime.extend({
       
       var Runtime = Fargo.Runtime,
           Cons    = Runtime.Cons,
+          Symbol  = Runtime.Symbol,
           NULL    = Cons.NULL,
           
           path    = require('path'),
@@ -14,16 +15,25 @@ Fargo.Runtime.extend({
       // Core syntax
       
       this.syntax('define', function(scope, cells) {
-        scope.define(cells.car.name, Fargo.evaluate(cells.cdr.car, scope));
+        if (cells.car.klass === Cons) {
+          var name   = cells.car.car.name,
+              params = cells.car.cdr,
+              body   = cells.cdr;
+          
+          scope.define(name, new Runtime.Function(scope, params, body));
+          
+        } else if (cells.car.klass === Symbol) {
+          scope.define(cells.car.name, Fargo.evaluate(cells.cdr.car, scope));
+        }
       });
       
       this.syntax('if', function(scope, cells) {
         var which = Fargo.evaluate(cells.car, scope) ? cells.cdr.car : cells.cdr.cdr.car;
-        return new Fargo.Runtime.Frame(which, scope);
+        return new Runtime.Frame(which, scope);
       });
       
       this.syntax('lambda', function(scope, cells) {
-        return new Fargo.Runtime.Function(scope, cells.car, cells.cdr);
+        return new Runtime.Function(scope, cells.car, cells.cdr);
       });
       
       this.syntax('quote', function(scope, cells) {
