@@ -11,5 +11,10 @@ Fargo.extend({
   freeze: function(value) {
     if (value && value.freeze) value.freeze();
     return value;
+  },
+  
+  parseFile: function(path) {
+    var source = require('fs').readFileSync(path);
+    return this.SchemeParser.parse(source.toString());
   }
 });

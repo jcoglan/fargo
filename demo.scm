@@ -15,5 +15,13 @@
 (puts '(a b c))
 (puts (cdr '(a b c)))
 
-(define list '(1 2 3))
+(define list (cons 1 (cons 2 (cons 3 '()))))
 (set-car! (cdr list) 5)
+
+(puts list)
+(puts (eq? '(1 2) '(1 2)))
+(puts (eq? '() '()))
+(puts (list? 'foo))
+
+(define square (lambda (x) (* x x)))
+(puts (map square '(1 2 3 4)))

@@ -35,6 +35,14 @@ Fargo.Runtime.extend({
 });
 
 Fargo.Runtime.Cons.extend({
+  list: function(array) {
+    var list = this.NULL,
+        i    = array.length;
+    
+    while (i--) list = new this(array[i], list);
+    return list;
+  },
+  
   NULL: new Fargo.Runtime.Cons()
 });
 

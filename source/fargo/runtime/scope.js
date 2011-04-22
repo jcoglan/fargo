@@ -22,6 +22,11 @@ Fargo.Runtime.extend({
     
     syntax: function(name, block) {
       this._vars[name] = new Fargo.Runtime.Syntax(this, block);
+    },
+    
+    run: function(path) {
+      var program = Fargo.parseFile(path);
+      program.eval(this);
     }
   })
 });

@@ -50,12 +50,11 @@ Fargo.Scheme.List = new JS.Module({
     if (this._ast) return this._ast;
     
     var cells = this.cells.elements,
-        cons  = Fargo.Runtime.Cons,
-        list  = cons.NULL,
+        elems = [],
         i = cells.length;
     
-    while (i--) list = new cons(cells[i].convert(), list);
-    return this._ast = list;
+    while (i--) elems[i] = cells[i].convert();
+    return this._ast = Fargo.Runtime.Cons.list(elems);
   }
 });
 
