@@ -14,7 +14,10 @@ Fargo.Runtime.extend({
     },
     
     freeze: function() {
+      if (this.frozen) return;
       this.frozen = true;
+      Fargo.freeze(this.car);
+      Fargo.freeze(this.cdr);
     },
     
     toString: function() {

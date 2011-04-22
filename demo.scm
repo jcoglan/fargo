@@ -16,4 +16,4 @@
 (puts (cdr '(a b c)))
 
 (define list '(1 2 3))
-(set-car! list 4)
+(set-car! (cdr list) 5)
