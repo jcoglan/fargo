@@ -69,10 +69,17 @@ Fargo.Runtime.extend({
       //================================================================
       // Predicates
       
-      this.define('eq?', function(a,b) { return a === b });
+      var eqv = function(a,b) {
+        if (a.klass === Symbol && b.klass === Symbol)
+          return a.name === b.name;
+        else
+          return a === b;
+      };
+      this.define('eqv?', eqv);
+      this.define('eq?',  eqv);
       
       this.define('pair?', function(object) {
-        return object && object.klass === Cons && object !== NULL;
+        return object.klass === Cons && object !== NULL;
       });
       
       this.define('boolean?', function(object) { return typeof object === 'boolean' });
@@ -80,7 +87,7 @@ Fargo.Runtime.extend({
       this.define('string?',  function(object) { return typeof object === 'string'  });
       
       this.define('symbol?', function(object) {
-        return object && object.klass === Runtime.Symbol;
+        return object.klass === Runtime.Symbol;
       });
       
       //================================================================

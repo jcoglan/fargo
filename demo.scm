@@ -20,6 +20,7 @@
 
 (puts list)
 (puts (eq? '(1 2) '(1 2)))
+(puts (eq? 'foo 'foo))
 (puts (eq? '() '()))
 (puts (list? 'foo))
 
