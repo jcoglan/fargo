@@ -1,8 +1,13 @@
 Fargo.Runtime.extend({
   Scope: new JS.Class({
-    initialize: function(parent) {
+    initialize: function(runtime, parent) {
+      this.runtime = runtime;
       this._parent = parent;
       this._vars   = {};
+    },
+    
+    spawn: function() {
+      return new Fargo.Runtime.Scope(this.runtime, this);
     },
     
     resolve: function(name) {

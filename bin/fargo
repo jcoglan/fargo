@@ -11,7 +11,7 @@ require(path.dirname(__filename) + '/../build/fargo');
 
 fs.readFile(process.ARGV[2], function(err, source) {
   var program = Fargo.SchemeParser.parse(source.toString()),
-      scope   = new Fargo.Runtime.TopLevel();
+      runtime = new Fargo.Runtime();
   
-  program.eval(scope);
+  program.eval(runtime.scope);
 });

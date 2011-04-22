@@ -24,7 +24,7 @@ Fargo.Runtime.extend({
         return this._body.apply(this, args);
       
       var param = this._params,
-          scope = new Fargo.Runtime.Scope(this._lexicalScope),
+          scope = this._lexicalScope.spawn(),
           i     = 0;
       
       while (param !== nil) {

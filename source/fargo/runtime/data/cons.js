@@ -6,11 +6,8 @@ Fargo.Runtime.extend({
     },
     
     eval: function(scope) {
-      var Frame = Fargo.Runtime.Frame,
-          frame = new Frame(this, scope);
-      
-      while (frame && frame.klass === Frame) frame = frame.iterate();
-      return frame;
+      var frame = new Fargo.Runtime.Frame(this, scope);
+      return scope.runtime.stack.push(frame);
     },
     
     freeze: function() {
