@@ -32,14 +32,7 @@ Fargo.Runtime.extend({
         param = param.cdr;
         i += 1;
       }
-      
-      var expression = this._body;
-      
-      while (expression.cdr !== nil) {
-        Fargo.evaluate(expression.car, scope);
-        expression = expression.cdr;
-      }
-      return new Fargo.Runtime.Frame(expression.car, scope);
+      return new Fargo.Runtime.Body(this._body, scope);
     }
   })
 });

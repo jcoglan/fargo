@@ -1,8 +1,12 @@
 Fargo.Runtime.extend({
   Stackless: new JS.Class({
     push: function(frame) {
-      var Frame = frame.klass;
-      while (frame && frame.klass === Frame) frame = frame.iterate();
+      var Frame = Fargo.Runtime.Frame;
+
+      while (frame && frame.klass && (frame.klass === Frame ||
+                                      frame.klass.superclass === Frame))
+        frame = frame.process();
+
       return frame;
     }
   })
