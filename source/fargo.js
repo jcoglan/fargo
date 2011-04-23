@@ -1,3 +1,4 @@
+var sys = require('sys');
 Fargo = new JS.Module('Fargo');
 
 Fargo.extend({

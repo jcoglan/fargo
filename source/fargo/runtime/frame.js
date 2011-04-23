@@ -15,6 +15,7 @@ Fargo.Runtime.extend({
         return Fargo.evaluate(expr, scope);
       
       var proc = Fargo.evaluate(expr.car, scope);
+      this.complete = true;
       return proc.call(scope, expr.cdr);
     }
   })
@@ -23,23 +24,23 @@ Fargo.Runtime.extend({
 Fargo.Runtime.extend({
   Body: new JS.Class(Fargo.Runtime.Frame, {
     initialize: function(expressions, scope) {
-      this._expressions = expressions;
-      this._scope       = scope;
-      this._values      = [];
+      this._expression = expressions;
+      this._scope      = scope;
+      this._values     = [];
     },
-
+    
     process: function() {
-      var expression = this._expressions.car,
+      var expression = this._expression.car,
           Frame      = Fargo.Runtime.Frame,
           NULL       = Fargo.Runtime.Cons.NULL;
-
-      this._expressions = this._expressions.cdr;
-
+      
+      this._expression = this._expression.cdr;
+      
       if (this._expression === NULL) {
         this.complete = true;
         return new Frame(expression, this._scope);
       }
-
+      
       var stack = this._scope.runtime.stack;
       return stack.push(new Frame(expression, this._scope));
     }

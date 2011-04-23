@@ -4,6 +4,7 @@ Fargo.Runtime.extend({
       this.callSuper();
       
       var Runtime = Fargo.Runtime,
+          Fiber   = Runtime.Fiber,
           Cons    = Runtime.Cons,
           Symbol  = Runtime.Symbol,
           NULL    = Cons.NULL,
@@ -18,12 +19,16 @@ Fargo.Runtime.extend({
         if (cells.car.klass === Cons) {
           var name   = cells.car.car.name,
               params = cells.car.cdr,
-              body   = cells.cdr;
+              body   = cells.cdr,
+              proc   = new Runtime.Function(scope, params, body);
           
-          scope.define(name, new Runtime.Function(scope, params, body));
+          scope.define(name, proc);
+          return proc;
           
         } else if (cells.car.klass === Symbol) {
-          scope.define(cells.car.name, Fargo.evaluate(cells.cdr.car, scope));
+          var value = Fargo.evaluate(cells.cdr.car, scope);
+          scope.define(cells.car.name, value);
+          return value;
         }
       });
       
@@ -38,6 +43,21 @@ Fargo.Runtime.extend({
       
       this.syntax('quote', function(scope, cells) {
         return Fargo.freeze(cells.car);
+      });
+      
+      //================================================================
+      // Fibers
+      
+      this.syntax('fiber', function(scope, cells) {
+        return new Fiber(scope, cells);
+      });
+      
+      this.define('yield', function(value) {
+        return {yieldValue: value};
+      });
+      
+      this.define('resume', function(fiber) {
+        return fiber.resume();
       });
       
       //================================================================
@@ -115,11 +135,13 @@ Fargo.Runtime.extend({
       this.define('set-car!', function(pair, value) {
         if (pair.frozen) throw new Error('Cannot set-car! on immutable list');
         pair.car = value;
+        return value;
       });
       
       this.define('set-cdr!', function(pair, value) {
         if (pair.frozen) throw new Error('Cannot set-cdr! on immutable list');
         pair.cdr = value;
+        return value;
       });
       
       this.run(dirname + '/lib/lists.scm');

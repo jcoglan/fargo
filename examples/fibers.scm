@@ -1,0 +1,11 @@
+(define (infinite-stream)
+  (define (loop i)
+    (yield i)
+    (loop (+ i 1)))
+  (loop 0))
+
+(define gen (fiber (infinite-stream)))
+(puts (resume gen))
+(puts (resume gen))
+(puts (resume gen))
+(puts (resume gen))
