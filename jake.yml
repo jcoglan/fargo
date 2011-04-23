@@ -17,7 +17,7 @@ packages:
     - fargo
     - fargo/scheme
     - fargo/scheme_nodes
-    - fargo/runtime/callable/function
+    - fargo/runtime/callable/procedure
     - fargo/runtime/callable/syntax
     - fargo/runtime/callable/fiber
     - fargo/runtime/data/cons

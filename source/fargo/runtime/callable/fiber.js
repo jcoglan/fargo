@@ -1,5 +1,5 @@
 Fargo.Runtime.extend({
-  Fiber: new JS.Class(Fargo.Runtime.Function, {
+  Fiber: new JS.Class(Fargo.Runtime.Procedure, {
     initialize: function(scope, body) {
       this._scope = scope;
       this._body  = new Fargo.Runtime.Body(body, scope);

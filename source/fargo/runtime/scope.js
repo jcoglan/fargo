@@ -21,7 +21,7 @@ Fargo.Runtime.extend({
     },
     
     define: function(name, value) {
-      if (typeof value === 'function') value = new Fargo.Runtime.Function(this, value);
+      if (typeof value === 'function') value = new Fargo.Runtime.Procedure(this, value);
       this._vars[name] = value;
     },
     

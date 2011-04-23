@@ -1,5 +1,5 @@
 Fargo.Runtime.extend({
-  Function: new JS.Class({
+  Procedure: new JS.Class({
     initialize: function(scope, paramsList, bodyList) {
       this._lexicalScope = scope;
       if (typeof paramsList === 'function') {

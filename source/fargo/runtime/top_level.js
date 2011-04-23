@@ -20,7 +20,7 @@ Fargo.Runtime.extend({
           var name   = cells.car.car.name,
               params = cells.car.cdr,
               body   = cells.cdr,
-              proc   = new Runtime.Function(scope, params, body);
+              proc   = new Runtime.Procedure(scope, params, body);
           
           scope.define(name, proc);
           return proc;
@@ -42,7 +42,7 @@ Fargo.Runtime.extend({
       });
       
       this.syntax('lambda', function(scope, cells) {
-        return new Runtime.Function(scope, cells.car, cells.cdr);
+        return new Runtime.Procedure(scope, cells.car, cells.cdr);
       });
       
       this.syntax('quote', function(scope, cells) {
