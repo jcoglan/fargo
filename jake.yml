@@ -19,9 +19,9 @@ packages:
     - fargo/scheme_nodes
     - fargo/runtime/callable/function
     - fargo/runtime/callable/syntax
+    - fargo/runtime/callable/fiber
     - fargo/runtime/data/cons
     - fargo/runtime/data/symbol
-    - fargo/runtime/fiber
     - fargo/runtime/stack
     - fargo/runtime/stackless
     - fargo/runtime/frame

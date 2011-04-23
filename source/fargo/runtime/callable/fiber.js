@@ -1,12 +1,12 @@
 Fargo.Runtime.extend({
-  Fiber: new JS.Class({
+  Fiber: new JS.Class(Fargo.Runtime.Function, {
     initialize: function(scope, body) {
       this._scope = scope;
       this._body  = new Fargo.Runtime.Body(body, scope);
       this._stack = new Fargo.Runtime.Stack(this._body);
     },
     
-    resume: function() {
+    call: function() {
       var runtime = this._scope.runtime,
           current = runtime.stack;
       

@@ -8,8 +8,8 @@
   (loop 0))
 
 (define gen (fiber (stream)))
-(puts (resume gen))
-(puts (resume gen))
-(puts (resume gen))
-(puts (resume gen))
-(puts (resume gen))
+(puts (gen))
+(puts (gen))
+(puts (gen))
+(puts (gen))
+(puts (gen))

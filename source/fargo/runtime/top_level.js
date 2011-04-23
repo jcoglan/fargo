@@ -60,10 +60,6 @@ Fargo.Runtime.extend({
         return {yieldValue: value};
       });
       
-      this.define('resume', function(fiber) {
-        return fiber.resume();
-      });
-      
       //================================================================
       // Should be macros
       
