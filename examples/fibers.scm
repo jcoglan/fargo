@@ -1,10 +1,14 @@
-(define (infinite-stream)
+(define (stream)
   (define (loop i)
-    (yield i)
-    (loop (+ i 1)))
+    (if (< i 3)
+        (begin
+          (yield i)
+          (loop (+ i 1)))
+        3))
   (loop 0))
 
-(define gen (fiber (infinite-stream)))
+(define gen (fiber (stream)))
+(puts (resume gen))
 (puts (resume gen))
 (puts (resume gen))
 (puts (resume gen))

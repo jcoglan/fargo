@@ -11,11 +11,12 @@ Fargo.Runtime.extend({
           scope = this._scope,
           Cons  = Fargo.Runtime.Cons;
       
+      this.complete = true;
+      
       if (!expr || expr.klass !== Cons)
         return Fargo.evaluate(expr, scope);
       
       var proc = Fargo.evaluate(expr.car, scope);
-      this.complete = true;
       return proc.call(scope, expr.cdr);
     }
   })

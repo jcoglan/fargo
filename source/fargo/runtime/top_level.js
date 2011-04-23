@@ -37,6 +37,10 @@ Fargo.Runtime.extend({
         return new Runtime.Frame(which, scope);
       });
       
+      this.syntax('begin', function(scope, cells) {
+        return new Runtime.Body(cells, scope);
+      });
+      
       this.syntax('lambda', function(scope, cells) {
         return new Runtime.Function(scope, cells.car, cells.cdr);
       });
