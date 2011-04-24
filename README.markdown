@@ -86,7 +86,7 @@ with the response body after requesting the URL.
       var request = client.request('GET', uri.pathname);
       request.addListener('response', function(response) {
         var data = '';
-        response.addListener('data', function(c) { data += c});
+        response.addListener('data', function(c) { data += c });
         response.addListener('end', function() {
           callback.exec(data);
         });
