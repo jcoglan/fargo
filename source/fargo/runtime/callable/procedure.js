@@ -1,21 +1,21 @@
 Fargo.Runtime.extend({
   Procedure: new JS.Class({
-    initialize: function(scope, paramsList, bodyList) {
+    initialize: function(scope, params, body) {
       this._lexicalScope = scope;
-      if (typeof paramsList === 'function') {
-        this._body = paramsList;
+      if (typeof params === 'function') {
+        this._body = params;
       } else {
-        this._params = paramsList;
-        this._body   = bodyList;
+        this._params = params;
+        this._body   = body;
       }
     },
     
     call: function(scope, cells) {
       var args = [],
           cell = cells,
-          nil  = Fargo.Runtime.Cons.NULL;
+          NULL = Fargo.Runtime.Cons.NULL;
       
-      while (cell !== nil) {
+      while (cell !== NULL) {
         args.push(Fargo.evaluate(cell.car, scope));
         cell = cell.cdr;
       }
@@ -27,11 +27,15 @@ Fargo.Runtime.extend({
           scope = this._lexicalScope.spawn(),
           i     = 0;
       
-      while (param !== nil) {
+      while (param !== NULL) {
         scope.define(param.car.name, args[i]);
         param = param.cdr;
         i += 1;
       }
+      return this.execute(scope);
+    },
+    
+    execute: function(scope) {
       return new Fargo.Runtime.Body(this._body, scope);
     }
   })

@@ -53,7 +53,7 @@ Fargo.Runtime.extend({
       // Fibers
       
       this.syntax('fiber', function(scope, cells) {
-        return new Fiber(scope, cells);
+        return new Fiber(scope, cells.car, cells.cdr);
       });
       
       this.define('yield', function(value) {
