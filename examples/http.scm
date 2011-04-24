@@ -1,9 +1,7 @@
 (load "./lib-http.js")
 
 (define (fiber-http-get url)
-  (define f (current-fiber))
-  (http-get url (lambda (response)
-    (f response)))
+  (http-get url (current-fiber))
   (yield))
 
 (define program (fiber ()
