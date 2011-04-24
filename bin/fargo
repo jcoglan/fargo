@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var path = require('path'),
-    fs   = require('fs'),
     sys  = require('sys');
 
 JSCLASS_PATH = path.dirname(__filename) + '/../vendor/js.class/build/src';
@@ -9,9 +8,7 @@ require(JSCLASS_PATH + '/loader');
 require(JSCLASS_PATH + '/core');
 require(path.dirname(__filename) + '/../build/fargo');
 
-fs.readFile(process.ARGV[2], function(err, source) {
-  var program = Fargo.SchemeParser.parse(source.toString()),
-      runtime = new Fargo.Runtime();
-  
-  program.eval(runtime.scope);
-});
+var runtime = new Fargo.Runtime(),
+    path    = path.resolve(process.ARGV[2]);
+
+runtime.run(path);

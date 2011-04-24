@@ -1,3 +1,5 @@
+(load "./lib-http.js")
+
 (define (fiber-http-get url)
   (define f (current-fiber))
   (http-get url (lambda (response)

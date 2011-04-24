@@ -6,6 +6,14 @@ Fargo.extend({
     initialize: function() {
       this.stack = new this.klass.Stackless();
       this.scope = new this.klass.TopLevel(this);
+    },
+    
+    define: function(name, value) {
+      return this.scope.define(name, value);
+    },
+    
+    run: function(path) {
+      return this.scope.run(path);
     }
   }),
   

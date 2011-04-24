@@ -29,9 +29,32 @@ Fargo.Runtime.extend({
       this._vars[name] = new Fargo.Runtime.Syntax(this, block);
     },
     
-    run: function(path) {
-      var program = Fargo.parseFile(path);
-      program.eval(this);
+    run: function(pathname) {
+      var path    = require('path'),
+          dirname = this._path ? path.dirname(this._path) : '',
+          fqpath  = path.resolve(path.join(dirname, pathname)),
+          runtime = Fargo.runtime,
+          scope   = new Fargo.Runtime.FileScope(fqpath, this.runtime, this);
+      
+      Fargo.runtime = this.runtime;
+      
+      if (/\.js$/i.test(fqpath))
+        require(fqpath);
+      else
+        Fargo.parseFile(fqpath).eval(scope);
+      
+      Fargo.runtime = runtime;
+    }
+  })
+});
+
+Fargo.Runtime.extend({
+  FileScope: new JS.Class(Fargo.Runtime.Scope, {
+    initialize: function(path, runtime, parent) {
+      this._path   = path;
+      this.runtime = runtime;
+      this._parent = parent;
+      this._vars   = parent._vars;
     }
   })
 });
