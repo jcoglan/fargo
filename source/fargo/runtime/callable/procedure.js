@@ -2,6 +2,8 @@ Fargo.Runtime.extend({
   Procedure: new JS.Class({
     initialize: function(scope, params, body) {
       this._lexicalScope = scope;
+      this._runtime = scope.runtime;
+      
       if (typeof params === 'function') {
         this._body = params;
       } else {
@@ -30,6 +32,12 @@ Fargo.Runtime.extend({
       
       var scope = this._createScope(args);
       return new Fargo.Runtime.Body(this._body, scope);
+    },
+    
+    exec: function() {
+      var args = [].slice.call(arguments);
+      var frame = this.apply(args);
+      return this._runtime.stack.push(frame);
     },
     
     _createScope: function(args) {

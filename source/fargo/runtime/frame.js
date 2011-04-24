@@ -2,6 +2,7 @@ Fargo.Runtime.extend({
   Frame: new JS.Class({
     initialize: function(expression, scope) {
       this._expression = expression;
+      this.target      = expression;
       this._current    = expression;
       this._values     = Fargo.clone(expression);
       this._curValue   = this._values;
@@ -40,7 +41,7 @@ Fargo.Runtime.extend({
     },
     
     fill: function(frame, result) {
-      var subexpr = frame._expression,
+      var subexpr = frame.target,
           expr    = this._expression,
           value   = this._values,
           NULL    = Fargo.Runtime.Cons.NULL;
