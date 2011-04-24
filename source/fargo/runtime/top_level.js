@@ -4,7 +4,6 @@ Fargo.Runtime.extend({
       this.callSuper();
       
       var Runtime = Fargo.Runtime,
-          Fiber   = Runtime.Fiber,
           Cons    = Runtime.Cons,
           Symbol  = Runtime.Symbol,
           NULL    = Cons.NULL,
@@ -53,10 +52,10 @@ Fargo.Runtime.extend({
       // Fibers
       
       this.syntax('fiber', function(scope, cells) {
-        return new Fiber(scope, cells.car, cells.cdr);
+        return new Runtime.Fiber(scope, cells.car, cells.cdr);
       });
       
-      this.define('current-fiber', function() { return Fiber.current });
+      this.define('current-fiber', function() { return Runtime.Fiber.current });
       
       this.define('yield', function(value) {
         value = (value === undefined) ? NULL : value;
@@ -119,6 +118,10 @@ Fargo.Runtime.extend({
       
       this.define('symbol?', function(object) {
         return object.klass === Runtime.Symbol;
+      });
+      
+      this.define('procedure?', function(object) {
+        return object.klass === Runtime.Function
       });
       
       //================================================================

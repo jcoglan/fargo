@@ -1,6 +1,6 @@
 Fargo.runtime.define('http-get', function(url, callback) {
-  var uri    = require('url').parse(url)
-  client = require('http').createClient(80, uri.hostname);
+  var uri = require('url').parse(url),
+      client = require('http').createClient(80, uri.hostname);
   
   var request = client.request('GET', uri.pathname);
   request.addListener('response', function(response) {

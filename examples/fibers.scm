@@ -1,4 +1,4 @@
-(define gen (fiber (max)
+(define stream (fiber (max)
   (define (loop i)
     (if (< i max)
         (begin
@@ -7,9 +7,9 @@
         'done))
   (loop 0)))
 
-(puts (gen 2))
-(puts (gen))
-(puts (gen))
+(puts (stream 2))
+(puts (stream))
+(puts (stream))
 
 (define test (fiber (first)
   (define second (yield (+ first 2)))
