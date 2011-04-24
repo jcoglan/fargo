@@ -126,8 +126,8 @@ running within a fiber to simplify our async code.
 
 Fargo's syntax is that of Scheme. Booleans are written as `#t` and `#f`. Strings
 are be double-quoted only. Numeric literals are base-10 decimals. Lists are
-delimited with `(` and `)`. Quoted values are prefixed with `'`. Vectors and
-characters are currently not implemented.
+delimited with `(` and `)`. Quoted values are prefixed with `'`. The null value
+is the empty list `'()`. Vectors and characters are currently not implemented.
 
 Fargo implements the following syntax elements from Scheme:
 
