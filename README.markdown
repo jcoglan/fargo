@@ -113,7 +113,7 @@ running within a fiber to simplify our async code.
         (f response)))
       (yield))
     
-    ; We wrap our main program in a fiber to it can be suspended at will
+    ; We wrap our main program in a fiber so it can be suspended at will
     (define program (fiber ()
       (define page (fiber-http-get "http://www.google.com/"))
       (puts page)))
@@ -131,7 +131,7 @@ characters are currently not implemented.
 
 Fargo implements the following syntax elements from Scheme:
 
-* `define` by binding variables and creating functions
+* `define` for binding variables and creating functions
 * `begin` for bundling blocks of code as single expressions
 * `if` for conditional branching
 * `lambda` for creating first-class anonymous functions
