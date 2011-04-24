@@ -26,6 +26,9 @@ Fargo.Runtime.extend({
         
         return new Fargo.Runtime.Frame(expression.car, scope);
       }
+      if (expression.klass !== Fargo.Runtime.Cons)
+        return Fargo.evaluate(expression, scope);
+      
       var proc = Fargo.evaluate(expression.car, scope);
       return proc.call(scope, expression.cdr);
     }
