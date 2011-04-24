@@ -12,6 +12,20 @@ not sufficiently expressive. The initial version was written in various airport
 and hotel bars. It is probably slow and full of bugs.
 
 
+## Building Fargo
+
+    git clone git://github.com/jcoglan/fargo.git
+    cd fargo
+    gem install jake
+    git submodule update --init --recursive
+    cd vendor/js.class
+    jake
+    cd ../../
+    jake
+    
+    node bin/fargo path/to/program.scm
+
+
 ## Fibers
 
 The main reason for Fargo's existence at present is to add fibers to the Node
