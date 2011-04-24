@@ -6,17 +6,17 @@ Fargo.Runtime.extend({
     },
     
     resume: function(value) {
-      if (this._frames.length === 0)
-        throw new Error('Dead fiber called');
+      var frames = this._frames, last;
+      if (frames.length === 0) throw new Error('Dead fiber called');
       
-      value = (value === undefined) ? Fargo.Runtime.Cons.NULL : value;
-      
-      if (this._yield) this._frames.pop();
-      delete this._yield;
+      if (this._yield) {
+        last = frames.pop();
+        frames[frames.length - 1].fill(last, value);
+        delete this._yield;
+      }
       
       this.clear();
-      value = this._yield ? this._value.yieldValue : this._value;
-      return value;
+      return this._yield ? this._value.yieldValue : this._value;
     },
     
     push: function(frame) {
@@ -37,7 +37,7 @@ Fargo.Runtime.extend({
     process: function() {
       var frames = this._frames,
           Frame  = Fargo.Runtime.Frame,
-          last   = frames[frames.length - 1]
+          last   = frames[frames.length - 1],
           value  = last.process(),
           klass  = value.klass;
       

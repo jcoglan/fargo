@@ -2,22 +2,54 @@ Fargo.Runtime.extend({
   Frame: new JS.Class({
     initialize: function(expression, scope) {
       this._expression = expression;
+      this._current    = expression;
+      this._values     = Fargo.clone(expression);
+      this._curValue   = this._values;
       this._scope      = scope;
-      this.complete    = false;
     },
     
     process: function() {
-      var expr  = this._expression,
-          scope = this._scope,
-          Cons  = Fargo.Runtime.Cons;
+      var expr    = this._expression,
+          scope   = this._scope,
+          Runtime = Fargo.Runtime,
+          Cons    = Runtime.Cons,
+          NULL    = Cons.NULL;
       
-      this.complete = true;
-      
-      if (!expr || expr.klass !== Cons)
+      if (!expr || expr.klass !== Cons) {
+        this.complete = true;
         return Fargo.evaluate(expr, scope);
+      }
       
-      var proc = Fargo.evaluate(expr.car, scope);
-      return proc.call(scope, expr.cdr);
+      var proc = this._values.car;
+      if (proc.klass === Runtime.Syntax || this._current === NULL) {
+        this.complete = true;
+        return proc.call(scope, this._values.cdr);
+      }
+      
+      var stack   = scope.runtime.stack,
+          current = this._current,
+          value   = this._curValue;
+      
+      var result = stack.push(new Runtime.Frame(current.car, scope));
+      
+      this._curValue.car = result;
+      this._current = this._current.cdr;
+      this._curValue = this._curValue.cdr;
+      
+      return result;
+    },
+    
+    fill: function(frame, result) {
+      var subexpr = frame._expression,
+          expr    = this._expression,
+          value   = this._values,
+          NULL    = Fargo.Runtime.Cons.NULL;
+      
+      while (expr.car !== subexpr && expr !== NULL) {
+        expr = expr.cdr;
+        value = value.cdr;
+      }
+      if (expr !== NULL) value.car = new Fargo.Runtime.Value(result);
     }
   })
 });
@@ -44,6 +76,8 @@ Fargo.Runtime.extend({
       
       var stack = this._scope.runtime.stack;
       return stack.push(new Frame(expression, this._scope));
-    }
+    },
+    
+    fill: function() {}
   })
 });

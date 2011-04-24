@@ -27,3 +27,4 @@ packages:
     - fargo/runtime/frame
     - fargo/runtime/scope
     - fargo/runtime/top_level
+    - fargo/runtime/value

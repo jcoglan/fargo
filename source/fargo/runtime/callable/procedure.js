@@ -19,11 +19,22 @@ Fargo.Runtime.extend({
         args.push(Fargo.evaluate(cell.car, scope));
         cell = cell.cdr;
       }
+      return this.apply(args);
+    },
+    
+    apply: function(args) {
+      var NULL = Fargo.Runtime.Cons.NULL;
       
       if (typeof this._body === 'function')
         return this._body.apply(this, args);
       
-      var param = this._params,
+      var scope = this._createScope(args);
+      return new Fargo.Runtime.Body(this._body, scope);
+    },
+    
+    _createScope: function(args) {
+      var NULL  = Fargo.Runtime.Cons.NULL,
+          param = this._params,
           scope = this._lexicalScope.spawn(),
           i     = 0;
       
@@ -32,11 +43,7 @@ Fargo.Runtime.extend({
         param = param.cdr;
         i += 1;
       }
-      return this.execute(scope);
-    },
-    
-    execute: function(scope) {
-      return new Fargo.Runtime.Body(this._body, scope);
+      return scope;
     }
   })
 });

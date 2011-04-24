@@ -14,11 +14,11 @@ Fargo.Runtime.extend({
     },
     
     process: function() {
+      var expression = this._current._expression,
+          scope      = this._current._scope,
+          NULL       = Fargo.Runtime.Cons.NULL;
+      
       if (this._current.klass === Fargo.Runtime.Body) {
-        var expression = this._current._expression,
-            scope      = this._current._scope,
-            NULL       = Fargo.Runtime.Cons.NULL;
-        
         while (expression.cdr !== NULL) {
           Fargo.evaluate(expression.car, scope);
           expression = expression.cdr;
@@ -26,7 +26,8 @@ Fargo.Runtime.extend({
         
         return new Fargo.Runtime.Frame(expression.car, scope);
       }
-      return this._current.process();
+      var proc = Fargo.evaluate(expression.car, scope);
+      return proc.call(scope, expression.cdr);
     }
   })
 });

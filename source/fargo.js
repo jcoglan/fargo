@@ -9,7 +9,15 @@ Fargo.extend({
     }
   }),
   
+  clone: function(value) {
+    if (value && value.clone) return value.clone();
+    return value;
+  },
+  
   evaluate: function(expression, scope) {
+    if (expression && expression.klass === Fargo.Runtime.Value)
+      return expression.value;
+    
     if (!expression || !expression.eval) return expression;
     return expression.eval(scope);
   },

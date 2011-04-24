@@ -5,6 +5,10 @@ Fargo.Runtime.extend({
       this.cdr = (cdr === undefined) ? this.klass.NULL : cdr;
     },
     
+    clone: function() {
+      return this.klass.list(this);
+    },
+    
     eval: function(scope) {
       var frame = new Fargo.Runtime.Frame(this, scope);
       return scope.runtime.stack.push(frame);
@@ -33,10 +37,21 @@ Fargo.Runtime.extend({
 
 Fargo.Runtime.Cons.extend({
   list: function(array) {
-    var list = this.NULL,
-        i    = array.length;
+    var list, tail, i;
     
-    while (i--) list = new this(array[i], list);
+    if (array.klass === this) {
+      list = tail = new this();
+      while (array !== this.NULL) {
+        tail.car = array.car;
+        tail = tail.cdr = (array.cdr === this.NULL) ? this.NULL : new this();
+        array = array.cdr;
+      }
+      
+    } else {
+      list = this.NULL;
+      i = array.length;
+      while (i--) list = new this(array[i], list);
+    }
     return list;
   },
   

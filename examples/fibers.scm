@@ -10,4 +10,11 @@
 (puts (gen 2))
 (puts (gen))
 (puts (gen))
-(puts (gen))
+
+(define test (fiber (first)
+  (define second (yield (+ first 2)))
+  second))
+
+(puts (test 10))
+(puts (test 14))
+(puts (test 18))
