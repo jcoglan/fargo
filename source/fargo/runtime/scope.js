@@ -38,10 +38,16 @@ Fargo.Runtime.extend({
       
       Fargo.runtime = this.runtime;
       
-      if (/\.js$/i.test(fqpath))
+      if (/\.js$/i.test(fqpath)) {
         require(fqpath);
-      else
-        Fargo.parseFile(fqpath).eval(scope);
+      } else {
+        var source  = require('fs').readFileSync(fqpath),
+            parser  = new Fargo.SchemeParser(source.toString()),
+            program = parser.parse();
+        
+        if (program) program.eval(scope);
+        else throw new Error(Fargo.SchemeParser.formatError(parser.error));
+      }
       
       Fargo.runtime = runtime;
     }
