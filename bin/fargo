@@ -1,14 +1,51 @@
 #!/usr/bin/env node
 
 var path = require('path'),
-    sys  = require('sys');
+    sys  = require('sys'),
+    rl   = require('readline');
 
 JSCLASS_PATH = path.dirname(__filename) + '/../vendor/js.class/build/src';
 require(JSCLASS_PATH + '/loader');
 require(JSCLASS_PATH + '/core');
+require(JSCLASS_PATH + '/enumerable');
 require(path.dirname(__filename) + '/../build/fargo');
 
-var runtime = new Fargo.Runtime(),
-    path    = path.resolve(process.ARGV[2]);
+var runtime  = new Fargo.Runtime(),
+    filename = null;
 
-runtime.run(path);
+if (filename = process.ARGV[2]) {
+  runtime.run(path.resolve(filename));
+  
+} else {
+  var readline = rl.createInterface(process.stdin, process.stdout),
+      buffer   = '';
+  
+  readline.addListener('line', function(line) {
+    buffer += line;
+    
+    var program = Fargo.SchemeParser.parse(buffer);
+    if (!program) return readline.prompt();
+    
+    buffer = '';
+    try {
+      var result = program.eval(runtime.scope);
+      sys.puts('=> ' + result);
+    } catch (e) {
+      sys.puts(e);
+    }
+    
+    readline.prompt();
+  });
+  
+  readline.addListener('attemptClose', function() {
+    if (buffer.length === 0) {
+      readline.close();
+    } else {
+      buffer = '';
+      sys.puts('');
+      readline.prompt();
+    }
+  });
+  
+  readline.prompt();
+}
