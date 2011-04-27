@@ -6,6 +6,8 @@
       (and (pair? object)
            (list? (cdr object)))))
 
+(define (list . args) args)
+
 (define (length list)
   (if (null? list)
       0

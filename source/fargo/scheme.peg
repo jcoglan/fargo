@@ -11,7 +11,7 @@ grammar Fargo.Scheme
   
   list      <- "(" cells ")" <Fargo.Scheme.List>
   
-  cells     <- cell+ "." space cell / cell*
+  cells     <- cell+ dot:"." space cell / cell*
   
   vector    <- "#(" cell* ")"
   

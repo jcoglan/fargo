@@ -696,6 +696,7 @@ Fargo.Scheme = new JS.Module("Fargo.Scheme", {
             if (address3) {
                 elements0.push(address3);
                 text0 += address3.textValue;
+                labelled0.dot = address3;
                 var address4 = null;
                 address4 = this.__consume__space();
                 if (address4) {

@@ -24,19 +24,21 @@ Fargo.Runtime.extend({
     toString: function() {
       var elems  = [],
           cell   = this,
-          nil    = Fargo.Runtime.Cons.NULL;
+          NULL   = Fargo.Runtime.Cons.NULL;
       
-      while (cell !== nil) {
+      while (cell.klass === this.klass && cell !== NULL) {
         elems.push(String(cell.car));
         cell = cell.cdr;
       }
-      return '(' + elems.join(' ') + ')';
+      
+      var tail = (cell === NULL) ? '' : ' . ' + cell;
+      return '(' + elems.join(' ') + tail + ')';
     }
   })
 });
 
 Fargo.Runtime.Cons.extend({
-  list: function(array) {
+  list: function(array, tail) {
     var list, tail, i;
     
     if (array.klass === this) {
@@ -48,7 +50,7 @@ Fargo.Runtime.Cons.extend({
       }
       
     } else {
-      list = this.NULL;
+      list = tail || this.NULL;
       i = array.length;
       while (i--) list = new this(array[i], list);
     }

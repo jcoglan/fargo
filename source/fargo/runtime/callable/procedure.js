@@ -41,16 +41,20 @@ Fargo.Runtime.extend({
     },
     
     _createScope: function(args) {
-      var NULL  = Fargo.Runtime.Cons.NULL,
+      var Cons  = Fargo.Runtime.Cons,
+          NULL  = Cons.NULL,
           param = this._params,
           scope = this._lexicalScope.spawn(),
           i     = 0;
       
-      while (param !== NULL) {
+      while (param.klass === Cons && param !== NULL) {
         scope.define(param.car.name, args[i]);
         param = param.cdr;
         i += 1;
       }
+      if (param !== NULL)
+        scope.define(param.name, Cons.list(args.slice(i)));
+      
       return scope;
     }
   })
