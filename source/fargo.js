@@ -12,6 +12,10 @@ Fargo.extend({
       return this.scope.define(name, value);
     },
     
+    syntax: function(name, value) {
+      return this.scope.syntax(name, value);
+    },
+    
     run: function(path) {
       return this.scope.run(path);
     }
