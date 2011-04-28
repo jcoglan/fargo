@@ -61,6 +61,19 @@ Fargo.Scheme.List = new JS.Module({
   }
 });
 
+Fargo.Scheme.Vector = new JS.Module({
+  convert: function() {
+    if (this._ast) return this._ast;
+
+    var cells = this.elements[1].elements,
+        elems = [],
+        i = cells.length;
+
+    while (i--) elems[i] = cells[i].convert();
+    return this._ast = new Fargo.Runtime.Vector(elems);
+  }
+});
+
 Fargo.Scheme.Boolean = new JS.Module({
   convert: function() {
     return this.textValue === '#t';

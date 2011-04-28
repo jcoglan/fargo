@@ -171,3 +171,31 @@ Fargo.runtime.define('set-cdr!', function(pair, value) {
   pair.cdr = value;
   return value;
 });
+
+//================================================================
+
+// Vectors
+
+Fargo.runtime.define('make-vector', function(size, fill) {
+  if (fill === undefined) fill = NULL;
+  var elements = [];
+  while (size--) elements.push(fill);
+  return new Runtime.Vector(elements);
+});
+
+Fargo.runtime.define('vector-length', function(vector) {
+  return vector._elements.length;
+});
+
+Fargo.runtime.define('vector-ref', function(vector, k) {
+  var size = vector._elements.length;
+  if (k < 0 || k >= size) throw new Error('Index out of bounds');
+  return vector._elements[k];
+});
+
+Fargo.runtime.define('vector-set!', function(vector, k, object) {
+  var size = vector._elements.length;
+  if (k < 0 || k >= size) throw new Error('Index out of bounds');
+  if (vector.frozen) throw new Error('Cannot vector-set! on immutable vector');
+  return vector._elements[k] = object;
+});

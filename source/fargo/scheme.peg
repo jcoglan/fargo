@@ -13,7 +13,7 @@ grammar Fargo.Scheme
   
   cells     <- cell+ dot:"." space cell / cell*
   
-  vector    <- "#(" cell* ")"
+  vector    <- "#(" cell* ")" <Fargo.Scheme.Vector>
   
   atom      <- datum / symbol
   

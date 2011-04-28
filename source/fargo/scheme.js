@@ -868,8 +868,16 @@ Fargo.Scheme = new JS.Module("Fargo.Scheme", {
         }
         if (elements0) {
             this._offset = index1;
-            var klass3 = this.klass.SyntaxNode;
+            var klass3 = null;
+            if (Fargo.Scheme.Vector instanceof Function) {
+                klass3 = Fargo.Scheme.Vector;
+            } else {
+                klass3 = this.klass.SyntaxNode;
+            }
             address0 = new klass3(text0, this._offset, elements0, labelled0);
+            if (!(Fargo.Scheme.Vector instanceof Function)) {
+                address0.extend(Fargo.Scheme.Vector);
+            }
             this._offset += text0.length;
         } else {
             address0 = null;
