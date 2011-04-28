@@ -25,9 +25,18 @@ Fargo.Scheme.Program = new JS.Module({
 });
 
 Fargo.Scheme.QuotedCell = new JS.Module({
+  SHORTHANDS: {
+    "'":  'quote',
+    "`":  'quasiquote',
+    ",":  'unquote',
+    ",@": 'unquote-splicing'
+  },
+  
   convert: function() {
-    var runtime = Fargo.Runtime;
-    return new runtime.Cons(new runtime.Symbol('quote'),
+    var runtime = Fargo.Runtime,
+        macro   = this.SHORTHANDS[this.elements[1].textValue];
+    
+    return new runtime.Cons(new runtime.Symbol(macro),
            new runtime.Cons(this.cell.convert(),
                             runtime.Cons.NULL));
   }
@@ -64,11 +73,11 @@ Fargo.Scheme.List = new JS.Module({
 Fargo.Scheme.Vector = new JS.Module({
   convert: function() {
     if (this._ast) return this._ast;
-
+    
     var cells = this.elements[1].elements,
         elems = [],
         i = cells.length;
-
+    
     while (i--) elems[i] = cells[i].convert();
     return this._ast = new Fargo.Runtime.Vector(elems);
   }

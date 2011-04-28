@@ -1,7 +1,19 @@
 Fargo.Runtime.extend({
   Vector: new JS.Class({
+    include: JS.Enumerable,
+    
     initialize: function(elements) {
       this._elements = elements.slice();
+      this.length    = elements.length;
+    },
+    
+    forEach: function(block, context) {
+      for (var i = 0, n = this._elements.length; i < n; i++)
+        block.call(context, this._elements[i]);
+    },
+    
+    get: function(index) {
+      return this._elements[index];
     },
     
     clone: function() {

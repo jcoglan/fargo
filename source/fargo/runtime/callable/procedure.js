@@ -40,6 +40,11 @@ Fargo.Runtime.extend({
       return this._runtime.stack.push(frame);
     },
     
+    toString: function() {
+      var name = this.name ? ':' + this.name : '';
+      return '#<procedure' + name + '>';
+    },
+    
     _createScope: function(args) {
       var Cons  = Fargo.Runtime.Cons,
           NULL  = Cons.NULL,

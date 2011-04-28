@@ -1,11 +1,7 @@
 (define stream (fiber (max)
-  (define (loop i)
-    (if (< i max)
-        (begin
-          (yield i)
-          (loop (+ i 1)))
-        'done))
-  (loop 0)))
+  (do ((i 0 (+ 1 i)))
+      ((eqv? max i) 'done)
+    (yield i))))
 
 (puts (stream 2))
 (puts (stream))

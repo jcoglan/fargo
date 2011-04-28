@@ -29,8 +29,16 @@ Fargo.Runtime.extend({
       if (expression.klass !== Fargo.Runtime.Cons)
         return Fargo.evaluate(expression, scope);
       
-      var proc = Fargo.evaluate(expression.car, scope);
-      return proc.call(scope, expression.cdr);
+      var proc   = Fargo.evaluate(expression.car, scope),
+          result = proc.call(scope, expression.cdr);
+      
+      if (!result || result.klass !== Fargo.Runtime.Macro.Expansion)
+        return result;
+      
+      expression.parent.car = result.expression;
+      result.expression.parent = expression.parent;
+      
+      return new Fargo.Runtime.Frame(result.expression, scope);
     }
   })
 });

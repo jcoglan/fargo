@@ -39,7 +39,7 @@ Fargo.Runtime.extend({
           Frame  = Fargo.Runtime.Frame,
           last   = frames[frames.length - 1],
           value  = last.process(),
-          klass  = value.klass;
+          klass  = value && value.klass;
       
       this.setValue(value);
       if (this._yield || frames.length === 0 || !last.complete) return;
@@ -56,8 +56,9 @@ Fargo.Runtime.extend({
       this._value = value;
       this._yield = value && value.yieldValue !== undefined;
       
-      this._tail = value.klass && (value.klass === Frame ||
-                                   value.klass.superclass === Frame);
+      this._tail = value && value.klass &&
+                   (value.klass === Frame ||
+                    value.klass.superclass === Frame);
     }
   })
 });

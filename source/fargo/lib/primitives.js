@@ -23,6 +23,10 @@ Fargo.runtime.syntax('define', function(scope, cells) {
   }
 });
 
+Fargo.runtime.syntax('set!', function(scope, cells) {
+  return scope.set(cells.car.name, Fargo.evaluate(cells.cdr.car, scope));
+});
+
 Fargo.runtime.syntax('if', function(scope, cells) {
   var which = Fargo.evaluate(cells.car, scope) ? cells.cdr.car : cells.cdr.cdr.car;
   return new Runtime.Frame(which, scope);
@@ -40,6 +44,18 @@ Fargo.runtime.syntax('quote', function(scope, cells) {
   return Fargo.freeze(cells.car);
 });
 
+Fargo.runtime.syntax('define-syntax', function(scope, cells) {
+  scope.define(cells.car.name, Fargo.evaluate(cells.cdr.car, scope));
+});
+
+Fargo.runtime.syntax('syntax-rules', function(scope, cells) {
+  return new Runtime.Macro(scope, cells.car, cells.cdr);
+});
+
+Fargo.runtime.syntax('debug', function(scope, cells) {
+  require('sys').debug(scope.resolve(cells.car.name)._body);
+});
+
 //================================================================
 // Fibers
 
@@ -54,25 +70,8 @@ Fargo.runtime.define('yield', function(value) {
   return {yieldValue: value};
 });
 
-//================================================================
-// Should be macros
-
-Fargo.runtime.syntax('and', function(scope, cells) {
-  var and = true, cell = cells;
-  while (and && cell !== NULL) {
-    and = and && Fargo.evaluate(cell.car, scope);
-    cell = cell.cdr;
-  }
-  return and;
-});
-
-Fargo.runtime.syntax('or', function(scope, cells) {
-  var or = false, cell = cells;
-  while (!or && cell !== NULL) {
-    or = or || Fargo.evaluate(cell.car, scope);
-    cell = cell.cdr;
-  }
-  return or;
+Fargo.runtime.define('call-with-current-continuation', function() {
+  return NULL;
 });
 
 //================================================================
@@ -112,9 +111,8 @@ Fargo.runtime.define('pair?', function(object) {
   return object.klass === Cons && object !== NULL;
 });
 
-Fargo.runtime.define('boolean?', function(object) { return typeof object === 'boolean' });
-Fargo.runtime.define('number?',  function(object) { return typeof object === 'number'  });
-Fargo.runtime.define('string?',  function(object) { return typeof object === 'string'  });
+Fargo.runtime.define('complex?', function(object) { return typeof object === 'number' });
+Fargo.runtime.define('string?',  function(object) { return typeof object === 'string' });
 
 Fargo.runtime.define('symbol?', function(object) {
   return object.klass === Runtime.Symbol;
@@ -172,8 +170,11 @@ Fargo.runtime.define('set-cdr!', function(pair, value) {
   return value;
 });
 
-//================================================================
+Fargo.runtime.define('apply', function(procedure, list) {
+  return procedure.apply(list.toArray());
+});
 
+//================================================================
 // Vectors
 
 Fargo.runtime.define('make-vector', function(size, fill) {

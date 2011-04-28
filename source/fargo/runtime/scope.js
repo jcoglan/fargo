@@ -10,6 +10,12 @@ Fargo.Runtime.extend({
       return new Fargo.Runtime.Scope(this.runtime, this);
     },
     
+    set: function(name, value) {
+      var scope = this.innermostBinding(name);
+      if (!scope) throw new Error('Undefined variable ' + name);
+      return scope._vars[name] = value;
+    },
+    
     resolve: function(name) {
       var value, scope = this;
       while (value === undefined && scope) {
@@ -20,13 +26,23 @@ Fargo.Runtime.extend({
       throw new Error('Undefined variable ' + name);
     },
     
+    innermostBinding: function(name) {
+      var scope = this;
+      while (scope && !scope._vars.hasOwnProperty(name))
+        scope = scope._parent;
+      return scope;
+    },
+    
     define: function(name, value) {
       if (typeof value === 'function') value = new Fargo.Runtime.Procedure(this, value);
-      this._vars[name] = value;
+      if (!value.name) value.name = name;
+      return this._vars[name] = value;
     },
     
     syntax: function(name, block) {
-      this._vars[name] = new Fargo.Runtime.Syntax(this, block);
+      var syntax = new Fargo.Runtime.Syntax(this, block);
+      syntax.name = name;
+      return this._vars[name] = syntax;
     },
     
     run: function(pathname) {

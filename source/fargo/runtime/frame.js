@@ -1,12 +1,8 @@
 Fargo.Runtime.extend({
   Frame: new JS.Class({
     initialize: function(expression, scope) {
-      this._expression = expression;
-      this.target      = expression;
-      this._current    = expression;
-      this._values     = Fargo.clone(expression);
-      this._curValue   = this._values;
-      this._scope      = scope;
+      this._reset(expression);
+      this._scope = scope;
     },
     
     process: function() {
@@ -22,9 +18,17 @@ Fargo.Runtime.extend({
       }
       
       var proc = this._values.car;
-      if (proc.klass === Runtime.Syntax || this._current === NULL) {
+      
+      if (proc.klass === Runtime.Syntax ||
+          proc.klass === Runtime.Macro ||
+          this._current === NULL) {
+        
         this.complete = true;
-        return proc.call(scope, this._values.cdr);
+        var result = proc.call(scope, this._values.cdr);
+        
+        return (result && result.klass === Fargo.Runtime.Macro.Expansion)
+            ? this._reset(result.expression, true)
+            : result;
       }
       
       var stack   = scope.runtime.stack,
@@ -51,6 +55,19 @@ Fargo.Runtime.extend({
         value = value.cdr;
       }
       if (expr !== NULL) value.car = new Fargo.Runtime.Value(result);
+    },
+    
+    _reset: function(expression, replace) {
+      if (replace) {
+        this._expression.parent.car = expression;
+        expression.parent = this._expression.parent;
+      }
+      this._expression = expression;
+      this.target      = expression;
+      this._current    = expression;
+      this._values     = Fargo.clone(expression);
+      this._curValue   = this._values;
+      this.complete    = false;
     }
   })
 });

@@ -26,3 +26,11 @@
 
 (define square (lambda (x) (* x x)))
 (puts (map square '(1 2 3 4)))
+
+(puts (let ((x 1)
+            (y 2)
+            (z 3)
+            (h 7))
+        (+ (+ x y) z)))
+
+(puts `(x y ,map))

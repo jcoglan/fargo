@@ -1,3 +1,6 @@
 [submodule "vendor/js.class"]
 	path = vendor/js.class
 	url = git://github.com/jcoglan/js.class.git
+[submodule "vendor/heist"]
+	path = vendor/heist
+	url = git://github.com/jcoglan/heist.git

@@ -1,8 +1,20 @@
 Fargo.Runtime.extend({
   Cons: new JS.Class({
+    include: JS.Enumerable,
+    
     initialize: function(car, cdr) {
       this.car = (car === undefined) ? this.klass.NULL : car;
       this.cdr = (cdr === undefined) ? this.klass.NULL : cdr;
+      
+      if (this.car !== this.klass.NULL) this.car.parent = this;
+    },
+    
+    forEach: function(block, context) {
+      var pair = this;
+      while (pair.klass === this.klass && pair !== this.klass.NULL) {
+        block.call(context, pair.car);
+        pair = pair.cdr;
+      }
     },
     
     clone: function() {
@@ -30,15 +42,15 @@ Fargo.Runtime.extend({
     
     toString: function() {
       var elems  = [],
-          cell   = this,
-          NULL   = Fargo.Runtime.Cons.NULL;
+          pair   = this,
+          NULL   = this.klass.NULL;
       
-      while (cell.klass === this.klass && cell !== NULL) {
-        elems.push(String(cell.car));
-        cell = cell.cdr;
+      while (pair.klass === this.klass && pair !== NULL) {
+        elems.push(String(pair.car));
+        pair = pair.cdr;
       }
       
-      var tail = (cell === NULL) ? '' : ' . ' + cell;
+      var tail = (pair === NULL) ? '' : ' . ' + pair;
       return '(' + elems.join(' ') + tail + ')';
     }
   })

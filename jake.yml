@@ -17,11 +17,16 @@ packages:
     - fargo
     - fargo/scheme
     - fargo/scheme_nodes
-    - fargo/runtime/callable/procedure
-    - fargo/runtime/callable/syntax
-    - fargo/runtime/callable/fiber
     - fargo/runtime/data/cons
     - fargo/runtime/data/symbol
+    - fargo/runtime/data/vector
+    - fargo/runtime/callable/procedure
+    - fargo/runtime/callable/syntax
+    - fargo/runtime/callable/macro
+    - fargo/runtime/callable/macro/matches
+    - fargo/runtime/callable/macro/tree
+    - fargo/runtime/callable/macro/expansion
+    - fargo/runtime/callable/fiber
     - fargo/runtime/stack
     - fargo/runtime/stackless
     - fargo/runtime/frame
