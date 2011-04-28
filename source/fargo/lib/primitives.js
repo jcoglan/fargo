@@ -88,6 +88,10 @@ Fargo.runtime.define('puts', function(string) {
   return string;
 });
 
+Fargo.runtime.define('exit', function() {
+  process.exit();
+});
+
 //================================================================
 // Predicates
 
@@ -96,9 +100,13 @@ var eqv = function(a,b) {
     return a.name === b.name;
   else
     return a === b;
-  };
+};
 Fargo.runtime.define('eqv?', eqv);
 Fargo.runtime.define('eq?',  eqv);
+
+Fargo.runtime.define('equal?', function(a, b) {
+  return (a && a.equals) ? a.equals(b) : a === b;
+});
 
 Fargo.runtime.define('pair?', function(object) {
   return object.klass === Cons && object !== NULL;
@@ -128,7 +136,21 @@ Fargo.runtime.define('<',  function(a,b) { return a <  b });
 Fargo.runtime.define('<=', function(a,b) { return a <= b });
 Fargo.runtime.define('>',  function(a,b) { return a >  b });
 Fargo.runtime.define('>=', function(a,b) { return a >= b });
-Fargo.runtime.define('=',  function(a,b) { return a === b });
+
+'ceil floor round sin cos tan asin acos atan exp log sqrt random'.
+split(' ').forEach(function(fn) {
+  Fargo.runtime.define(fn, Math[fn]);
+});
+
+Fargo.runtime.define('expt', Math.pow);
+
+Fargo.runtime.define('number->string', function(number) {
+  return number.toString(10);
+});
+
+Fargo.runtime.define('string->number', function(string) {
+  return parseFloat(string, 10);
+});
 
 //================================================================
 // Lists and pairs

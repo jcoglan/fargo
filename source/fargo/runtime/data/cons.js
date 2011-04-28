@@ -9,6 +9,13 @@ Fargo.Runtime.extend({
       return this.klass.list(this);
     },
     
+    equals: function(other) {
+      if (!other || other.klass !== this.klass) return false;
+      var E = JS.Enumerable;
+      return E.areEqual(this.car, other.car) &&
+             E.areEqual(this.cdr, other.cdr);
+    },
+    
     eval: function(scope) {
       var frame = new Fargo.Runtime.Frame(this, scope);
       return scope.runtime.stack.push(frame);
@@ -63,8 +70,9 @@ Fargo.Runtime.Cons.extend({
 (function() {
   var nil = Fargo.Runtime.Cons.NULL;
   nil.extend({
-    car: nil,
-    cdr: nil,
+    car:      nil,
+    cdr:      nil,
+    equals:   function(other) { return other === this },
     toString: function() { return '()' }
   });
 })();
