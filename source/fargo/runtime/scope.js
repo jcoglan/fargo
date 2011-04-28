@@ -46,19 +46,18 @@ Fargo.Runtime.extend({
     },
     
     run: function(pathname) {
-      var path    = require('path'),
-          dirname = this._path ? path.dirname(this._path) : '',
-          fqpath  = path.resolve(path.join(dirname, pathname)),
+      var dirname = this._path ? Fargo.dirname(this._path) : '',
+          fqpath  = Fargo.path(dirname, pathname),
           runtime = Fargo.runtime,
           scope   = new Fargo.Runtime.FileScope(fqpath, this.runtime, this);
       
       Fargo.runtime = this.runtime;
       
       if (/\.js$/i.test(fqpath)) {
-        require(fqpath);
+        Fargo.loadJavaScript(fqpath);
       } else {
-        var source  = require('fs').readFileSync(fqpath),
-            parser  = new Fargo.SchemeParser(source.toString()),
+        var source  = Fargo.readFile(fqpath),
+            parser  = new Fargo.SchemeParser(source),
             program = parser.parse();
         
         if (program) program.eval(scope);

@@ -52,10 +52,6 @@ Fargo.runtime.syntax('syntax-rules', function(scope, cells) {
   return new Runtime.Macro(scope, cells.car, cells.cdr);
 });
 
-Fargo.runtime.syntax('debug', function(scope, cells) {
-  require('sys').debug(scope.resolve(cells.car.name)._body);
-});
-
 //================================================================
 // Fibers
 
@@ -83,7 +79,7 @@ Fargo.runtime.syntax('load', function(scope, cells) {
 });
 
 Fargo.runtime.define('puts', function(string) {
-  require('sys').puts(string);
+  Fargo.puts(string);
   return string;
 });
 

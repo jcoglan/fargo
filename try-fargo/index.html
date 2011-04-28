@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Try Fargo</title>
+    <link rel="stylesheet" href="/style.css">
+    <script type="text/javascript" src="/javascripts/fargo/js.class/loader.js"></script>
+    <script type="text/javascript" src="/javascripts/packages.js"></script>
+  </head>
+  <body>
+    
+    <!--
+      Hello-world fiber example using set-timeout and alert
+      
+      (define (get-message)
+        (define f (current-fiber))
+        (set-timeout (lambda ()
+          (f "Hello, world!")
+        ) 5000)
+        (yield))
+      
+      (define main (fiber ()
+        ; Look ma, it looks synchronous!
+        (define msg (get-message))
+        (alert msg)
+      ))
+    -->
+    
+    <div id="container">
+      <div id="sidebar">
+        <h1>Fargo.</h1>
+        
+        <p>This is an experimental language I&rsquo;m working on to improve
+          how we work with asynchronous systems in JavaScript. It runs on
+          <a href="http://nodejs.org">Node.js</a> and in browsers. At this point
+          it is very slow and likely full of bugs.</p>
+        
+        <p>Its core is basically a modified Scheme. It has tail-recursion and
+          <tt>syntax-rules</tt> macros. It uses the core library from
+          <a href="http://github.com/jcoglan/heist">Heist</a>. The core data
+          types are booleans, numbers, symbols, strings, lists and vectors.</p>
+        
+        <p>The main experiment here is that Fargo supports Ruby-style fibers for
+          pausing and resuming async work. You can find out more over on
+          <a href="http://github.com/jcoglan/fargo">GitHub</a>.</p>
+        
+        <p>View source for a fiber example using timeouts.</p>
+        
+        <p>MIT licensed, &copy; 2011 <a href="htpp://jcoglan.com">James Coglan</a>.</p>
+      </div>
+      <div id="fargo-console"></div>
+    </div>
+    
+    <script type="text/javascript">
+      window.FARGO_PATH = '/javascripts/fargo';
+      JS.require('jQuery.fn.console', 'Fargo', function() {
+        
+        var runtime = new Fargo.Runtime();
+        runtime.define('alert', function(message) {
+          alert(message);
+          return message;
+        });
+        
+        runtime.define('set-timeout', function(procedure, millis) {
+          setTimeout(function() { procedure.exec() }, millis);
+          return millis;
+        });
+        
+        var OPTIONS = {
+          commandValidate: function(line) {
+            return line.replace(/\s/, '') !== '';
+          },
+          
+          commandHandle: function(line) {
+            console.log(line);
+                  
+            var program = Fargo.SchemeParser.parse(line),
+                result;
+            
+            if (!program) return fargoConsole.continuedPrompt = true;
+            try {
+              result = program.eval(runtime.scope);
+              return result === undefined ? '' : '=> ' + result;
+            } catch (e) {
+              return e.toString();
+            } finally {
+              fargoConsole.continuedPrompt = false;
+            }
+          },
+          
+          welcomeMessage:       'e.g. (alert "Hello, world!")',
+          animateScroll:        true,
+          autofocus:            true,
+          promptHistory:        true,
+          promptLabel:          '> ',
+          continuedPrompt:      true,
+          continuedPromptLabel: '* '
+        };
+        
+        window.fargoConsole = jQuery('#fargo-console').console(OPTIONS);
+      });
+    </script>
+    
+  </body>
+</html>

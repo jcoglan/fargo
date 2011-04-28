@@ -1,4 +1,3 @@
-var sys = require('sys');
 Fargo = new JS.Module('Fargo');
 
 Fargo.extend({
@@ -37,5 +36,43 @@ Fargo.extend({
   freeze: function(value) {
     if (value && value.freeze) value.freeze();
     return value;
+  },
+          
+  dirname: function(path) {
+    return path.replace(/\/[^\/]*$/g, '');
+  },
+  
+  path: function() {
+    return Array.prototype.join.call(arguments, '/')
+           .replace(/\/+/g, '/');
+  },
+  
+  puts: function(string) {
+    if (typeof require === 'function') require('sys').puts(string);
+  },
+  
+  loadJavaScript: function(path) {
+    if (typeof require === 'function') require(path);
+    else eval(this.readFile(path));
+  },
+  
+  readFile: function(path) {
+    if (typeof require === 'function')
+      return require('fs').readFileSync(path).toString();
+    
+    var data = null,
+        xhr  = window.ActiveXObject
+             ? new ActiveXObject("Microsoft.XMLHTTP")
+             : new XMLHttpRequest();
+    
+    xhr.open('GET', path, false);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState !== 4) return;
+      data = xhr.responseText;
+      xhr.onreadystatechange = function() {};
+      xhr = null;
+    };
+    xhr.send(null);
+    return data;
   }
 });

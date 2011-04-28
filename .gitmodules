@@ -4,3 +4,6 @@
 [submodule "vendor/heist"]
 	path = vendor/heist
 	url = git://github.com/jcoglan/heist.git
+[submodule "try-fargo/javascripts/jquery-console"]
+	path = try-fargo/javascripts/jquery-console
+	url = git://github.com/chrisdone/jquery-console.git

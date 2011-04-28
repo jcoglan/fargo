@@ -4,16 +4,13 @@ Fargo.Runtime.extend({
       this.callSuper();
       this.runtime.scope = this;
       
-      var path    = require('path'),
-          dirname = path.dirname(__filename);
-      
-      this.run(dirname + '/lib/primitives.js');
-      this.run(dirname + '/lib/syntax.scm');
-      this.run(dirname + '/lib/util.scm');
-      this.run(dirname + '/lib/logic.scm');
-      this.run(dirname + '/lib/numeric.scm');
-      this.run(dirname + '/lib/list.scm');
-      this.run(dirname + '/lib/vector.scm');
+      this.run(FARGO_PATH + '/lib/primitives.js');
+      this.run(FARGO_PATH + '/lib/syntax.scm');
+      this.run(FARGO_PATH + '/lib/util.scm');
+      this.run(FARGO_PATH + '/lib/logic.scm');
+      this.run(FARGO_PATH + '/lib/numeric.scm');
+      this.run(FARGO_PATH + '/lib/list.scm');
+      this.run(FARGO_PATH + '/lib/vector.scm');
     }
   })
 });

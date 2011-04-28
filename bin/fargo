@@ -4,11 +4,13 @@ var path = require('path'),
     sys  = require('sys'),
     rl   = require('readline');
 
-JSCLASS_PATH = path.dirname(__filename) + '/../vendor/js.class/build/src';
+JSCLASS_PATH = path.dirname(__filename) + '/../build/js.class';
+FARGO_PATH   = path.dirname(__filename) + '/../build';
+
 require(JSCLASS_PATH + '/loader');
 require(JSCLASS_PATH + '/core');
 require(JSCLASS_PATH + '/enumerable');
-require(path.dirname(__filename) + '/../build/fargo');
+require(path.dirname(__filename) + '/../build/fargo-min');
 
 var runtime  = new Fargo.Runtime(),
     filename = null;

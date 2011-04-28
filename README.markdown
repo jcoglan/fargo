@@ -1,5 +1,7 @@
 # Fargo
 
+Try it out at http://fargo.jcoglan.com
+
 Fargo is a programming language that runs on Node.js. It's designed to ease
 asynchronous functional programming by providing features missing in JavaScript,
 namely tail recursion and some form of continuations. It is still an experiment
