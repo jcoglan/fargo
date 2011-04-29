@@ -47,7 +47,7 @@ a {
   width: 560px;
   height: 440px;
   overflow: auto;
-  font-size: 150%;
+  font-size: 120%;
   font-family: Monaco, Courier New, monospace;
 }
 .jquery-console-cursor {
