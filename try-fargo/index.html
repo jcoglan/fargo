@@ -61,11 +61,6 @@
           return message;
         });
         
-        runtime.define('set-timeout', function(procedure, millis) {
-          setTimeout(function() { procedure.exec() }, millis);
-          return millis;
-        });
-        
         var OPTIONS = {
           commandValidate: function(line) {
             return line.replace(/\s/, '') !== '';
