@@ -46,7 +46,7 @@ Fargo.Runtime.extend({
           NULL   = this.klass.NULL;
       
       while (pair.klass === this.klass && pair !== NULL) {
-        elems.push(String(pair.car));
+        elems.push(Fargo.stringify(pair.car));
         pair = pair.cdr;
       }
       

@@ -39,6 +39,13 @@ Fargo.extend({
     if (value && value.freeze) value.freeze();
     return value;
   },
+  
+  stringify: function(object) {
+    if (typeof object === 'boolean') return object ? '#t' : '#f';
+    if (typeof object === 'string') return JSON.stringify(object);
+    if (typeof object === 'number') return object.toString(10);
+    return object.toString();
+  },
           
   dirname: function(path) {
     return path.replace(/\/[^\/]*$/g, '');

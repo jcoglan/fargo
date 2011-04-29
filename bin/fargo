@@ -31,7 +31,7 @@ if (filename = process.ARGV[2]) {
     buffer = '';
     try {
       var result = program.eval(runtime.scope);
-      sys.puts('=> ' + result);
+      sys.puts('=> ' + Fargo.stringify(result));
     } catch (e) {
       sys.puts(e);
     }

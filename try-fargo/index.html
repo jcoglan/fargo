@@ -81,7 +81,7 @@
             if (!program) return fargoConsole.continuedPrompt = true;
             try {
               result = program.eval(runtime.scope);
-              return result === undefined ? '' : '=> ' + result;
+              return result === undefined ? '' : '=> ' + Fargo.stringify(result);
             } catch (e) {
               return e.toString();
             } finally {

@@ -32,7 +32,12 @@ Fargo.Runtime.extend({
     },
     
     toString: function() {
-      return '#(' + this.members.join(' ') + ')';
+      var elems = [];
+      
+      for (var i = 0, n = this.members.length; i < n; i++)
+        elems.push(Fargo.stringify(this.members[i]));
+      
+      return '#(' + elems.join(' ') + ')';
     }
   })
 });
