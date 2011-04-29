@@ -26,6 +26,8 @@ Fargo.Runtime.extend({
         
         this.complete = true;
         var result = proc.call(scope, this._values.cdr);
+        if (result === null || result === undefined)
+          throw new Error('Expression returned no value: ' + expression);
         
         return (result && result.klass === Fargo.Runtime.Macro.Expansion)
             ? this._reset(result.expression, true)

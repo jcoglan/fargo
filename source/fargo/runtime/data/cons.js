@@ -82,8 +82,8 @@ Fargo.Runtime.Cons.extend({
 (function() {
   var nil = Fargo.Runtime.Cons.NULL;
   nil.extend({
-    car:      nil,
-    cdr:      nil,
+    car:      undefined,
+    cdr:      undefined,
     equals:   function(other) { return other === this },
     toString: function() { return '()' }
   });

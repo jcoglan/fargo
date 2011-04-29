@@ -45,7 +45,9 @@ Fargo.runtime.syntax('quote', function(scope, cells) {
 });
 
 Fargo.runtime.syntax('define-syntax', function(scope, cells) {
-  scope.define(cells.car.name, Fargo.evaluate(cells.cdr.car, scope));
+  var macro = Fargo.evaluate(cells.cdr.car, scope);
+  scope.define(cells.car.name, macro);
+  return macro;
 });
 
 Fargo.runtime.syntax('syntax-rules', function(scope, cells) {

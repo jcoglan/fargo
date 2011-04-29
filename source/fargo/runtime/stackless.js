@@ -34,6 +34,8 @@ Fargo.Runtime.extend({
         throw new Error('Invalid expression: ' + expression);
       
       var result = proc.call(scope, expression.cdr);
+      if (result === null || result === undefined)
+        throw new Error('Expression has no value: ' + expression);
       
       if (!result || result.klass !== Fargo.Runtime.Macro.Expansion)
         return result;
