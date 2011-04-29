@@ -9,11 +9,11 @@ grammar Fargo.Scheme
   
   quote     <- "'" / "`" / ",@" / ","
   
-  list      <- "(" cells ")" <Fargo.Scheme.List>
+  list      <- ("(" cells ")" / "[" cells "]") <Fargo.Scheme.List>
   
   cells     <- cell+ dot:"." space cell / cell*
   
-  vector    <- "#(" cell* ")" <Fargo.Scheme.Vector>
+  vector    <- ("#(" cell* ")" / "#[" cell* "]") <Fargo.Scheme.Vector>
   
   atom      <- datum / symbol
   
@@ -31,7 +31,9 @@ grammar Fargo.Scheme
   
   reserved  <- "." / delimiter
   
-  delimiter <- quote / "#" / [()] / space
+  delimiter <- quote / "#" / paren / space
+  
+  paren     <- [\(\)\[\]]
   
   space     <- [\s\n\r\t]
   

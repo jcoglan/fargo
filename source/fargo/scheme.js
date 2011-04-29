@@ -540,6 +540,7 @@ Fargo.Scheme = new JS.Module("Fargo.Scheme", {
             return cached;
         }
         var index1 = this._offset;
+        var index2 = this._offset;
         var elements0 = [];
         var labelled0 = {};
         var text0 = "";
@@ -603,31 +604,119 @@ Fargo.Scheme = new JS.Module("Fargo.Scheme", {
                     text0 += address3.textValue;
                 } else {
                     elements0 = null;
-                    this._offset = index1;
+                    this._offset = index2;
                 }
             } else {
                 elements0 = null;
-                this._offset = index1;
+                this._offset = index2;
             }
         } else {
             elements0 = null;
-            this._offset = index1;
+            this._offset = index2;
         }
         if (elements0) {
-            this._offset = index1;
-            var klass2 = null;
-            if (Fargo.Scheme.List instanceof Function) {
-                klass2 = Fargo.Scheme.List;
-            } else {
-                klass2 = this.klass.SyntaxNode;
-            }
+            this._offset = index2;
+            var klass2 = this.klass.SyntaxNode;
             address0 = new klass2(text0, this._offset, elements0, labelled0);
-            if (!(Fargo.Scheme.List instanceof Function)) {
-                address0.extend(Fargo.Scheme.List);
-            }
             this._offset += text0.length;
         } else {
             address0 = null;
+        }
+        if (address0) {
+            if (!(Fargo.Scheme.List instanceof Function)) {
+                address0.extend(Fargo.Scheme.List);
+            }
+        } else {
+            this._offset = index1;
+            var index3 = this._offset;
+            var elements1 = [];
+            var labelled1 = {};
+            var text1 = "";
+            var address4 = null;
+            var slice4 = null;
+            if (this._input.length > this._offset) {
+                slice4 = this._input.substring(this._offset, this._offset + 1);
+            } else {
+                slice4 = null;
+            }
+            if (slice4 === "[") {
+                var klass3 = this.klass.SyntaxNode;
+                address4 = new klass3("[", this._offset, []);
+                this._offset += 1;
+            } else {
+                address4 = null;
+                var slice5 = null;
+                if (this._input.length > this._offset) {
+                    slice5 = this._input.substring(this._offset, this._offset + 1);
+                } else {
+                    slice5 = null;
+                }
+                if (!this.error || this.error.offset <= this._offset) {
+                    this.error = this.klass.lastError = {input: this._input, offset: this._offset, expected: "", actual: slice5 || "<EOF>"};
+                }
+            }
+            if (address4) {
+                elements1.push(address4);
+                text1 += address4.textValue;
+                var address5 = null;
+                address5 = this.__consume__cells();
+                if (address5) {
+                    elements1.push(address5);
+                    text1 += address5.textValue;
+                    labelled1.cells = address5;
+                    var address6 = null;
+                    var slice6 = null;
+                    if (this._input.length > this._offset) {
+                        slice6 = this._input.substring(this._offset, this._offset + 1);
+                    } else {
+                        slice6 = null;
+                    }
+                    if (slice6 === "]") {
+                        var klass4 = this.klass.SyntaxNode;
+                        address6 = new klass4("]", this._offset, []);
+                        this._offset += 1;
+                    } else {
+                        address6 = null;
+                        var slice7 = null;
+                        if (this._input.length > this._offset) {
+                            slice7 = this._input.substring(this._offset, this._offset + 1);
+                        } else {
+                            slice7 = null;
+                        }
+                        if (!this.error || this.error.offset <= this._offset) {
+                            this.error = this.klass.lastError = {input: this._input, offset: this._offset, expected: "", actual: slice7 || "<EOF>"};
+                        }
+                    }
+                    if (address6) {
+                        elements1.push(address6);
+                        text1 += address6.textValue;
+                    } else {
+                        elements1 = null;
+                        this._offset = index3;
+                    }
+                } else {
+                    elements1 = null;
+                    this._offset = index3;
+                }
+            } else {
+                elements1 = null;
+                this._offset = index3;
+            }
+            if (elements1) {
+                this._offset = index3;
+                var klass5 = this.klass.SyntaxNode;
+                address0 = new klass5(text1, this._offset, elements1, labelled1);
+                this._offset += text1.length;
+            } else {
+                address0 = null;
+            }
+            if (address0) {
+                if (!(Fargo.Scheme.List instanceof Function)) {
+                    address0.extend(Fargo.Scheme.List);
+                }
+            } else {
+                this._offset = index1;
+            }
         }
         return this._nodeCache.list[index0] = address0;
     },
@@ -774,6 +863,7 @@ Fargo.Scheme = new JS.Module("Fargo.Scheme", {
             return cached;
         }
         var index1 = this._offset;
+        var index2 = this._offset;
         var elements0 = [];
         var labelled0 = {};
         var text0 = "";
@@ -805,7 +895,7 @@ Fargo.Scheme = new JS.Module("Fargo.Scheme", {
             text0 += address1.textValue;
             var address2 = null;
             var remaining0 = 0;
-            var index2 = this._offset;
+            var index3 = this._offset;
             var elements1 = [];
             var text1 = "";
             var address3 = true;
@@ -818,7 +908,7 @@ Fargo.Scheme = new JS.Module("Fargo.Scheme", {
                 }
             }
             if (remaining0 <= 0) {
-                this._offset = index2;
+                this._offset = index3;
                 var klass1 = this.klass.SyntaxNode;
                 address2 = new klass1(text1, this._offset, elements1);
                 this._offset += text1.length;
@@ -856,31 +946,138 @@ Fargo.Scheme = new JS.Module("Fargo.Scheme", {
                     text0 += address4.textValue;
                 } else {
                     elements0 = null;
-                    this._offset = index1;
+                    this._offset = index2;
                 }
             } else {
                 elements0 = null;
-                this._offset = index1;
+                this._offset = index2;
             }
         } else {
             elements0 = null;
-            this._offset = index1;
+            this._offset = index2;
         }
         if (elements0) {
-            this._offset = index1;
-            var klass3 = null;
-            if (Fargo.Scheme.Vector instanceof Function) {
-                klass3 = Fargo.Scheme.Vector;
-            } else {
-                klass3 = this.klass.SyntaxNode;
-            }
+            this._offset = index2;
+            var klass3 = this.klass.SyntaxNode;
             address0 = new klass3(text0, this._offset, elements0, labelled0);
-            if (!(Fargo.Scheme.Vector instanceof Function)) {
-                address0.extend(Fargo.Scheme.Vector);
-            }
             this._offset += text0.length;
         } else {
             address0 = null;
+        }
+        if (address0) {
+            if (!(Fargo.Scheme.Vector instanceof Function)) {
+                address0.extend(Fargo.Scheme.Vector);
+            }
+        } else {
+            this._offset = index1;
+            var index4 = this._offset;
+            var elements2 = [];
+            var labelled1 = {};
+            var text2 = "";
+            var address5 = null;
+            var slice4 = null;
+            if (this._input.length > this._offset) {
+                slice4 = this._input.substring(this._offset, this._offset + 2);
+            } else {
+                slice4 = null;
+            }
+            if (slice4 === "#[") {
+                var klass4 = this.klass.SyntaxNode;
+                address5 = new klass4("#[", this._offset, []);
+                this._offset += 2;
+            } else {
+                address5 = null;
+                var slice5 = null;
+                if (this._input.length > this._offset) {
+                    slice5 = this._input.substring(this._offset, this._offset + 1);
+                } else {
+                    slice5 = null;
+                }
+                if (!this.error || this.error.offset <= this._offset) {
+                    this.error = this.klass.lastError = {input: this._input, offset: this._offset, expected: "", actual: slice5 || "<EOF>"};
+                }
+            }
+            if (address5) {
+                elements2.push(address5);
+                text2 += address5.textValue;
+                var address6 = null;
+                var remaining1 = 0;
+                var index5 = this._offset;
+                var elements3 = [];
+                var text3 = "";
+                var address7 = true;
+                while (address7) {
+                    address7 = this.__consume__cell();
+                    if (address7) {
+                        elements3.push(address7);
+                        text3 += address7.textValue;
+                        remaining1 -= 1;
+                    }
+                }
+                if (remaining1 <= 0) {
+                    this._offset = index5;
+                    var klass5 = this.klass.SyntaxNode;
+                    address6 = new klass5(text3, this._offset, elements3);
+                    this._offset += text3.length;
+                } else {
+                    address6 = null;
+                }
+                if (address6) {
+                    elements2.push(address6);
+                    text2 += address6.textValue;
+                    var address8 = null;
+                    var slice6 = null;
+                    if (this._input.length > this._offset) {
+                        slice6 = this._input.substring(this._offset, this._offset + 1);
+                    } else {
+                        slice6 = null;
+                    }
+                    if (slice6 === "]") {
+                        var klass6 = this.klass.SyntaxNode;
+                        address8 = new klass6("]", this._offset, []);
+                        this._offset += 1;
+                    } else {
+                        address8 = null;
+                        var slice7 = null;
+                        if (this._input.length > this._offset) {
+                            slice7 = this._input.substring(this._offset, this._offset + 1);
+                        } else {
+                            slice7 = null;
+                        }
+                        if (!this.error || this.error.offset <= this._offset) {
+                            this.error = this.klass.lastError = {input: this._input, offset: this._offset, expected: "", actual: slice7 || "<EOF>"};
+                        }
+                    }
+                    if (address8) {
+                        elements2.push(address8);
+                        text2 += address8.textValue;
+                    } else {
+                        elements2 = null;
+                        this._offset = index4;
+                    }
+                } else {
+                    elements2 = null;
+                    this._offset = index4;
+                }
+            } else {
+                elements2 = null;
+                this._offset = index4;
+            }
+            if (elements2) {
+                this._offset = index4;
+                var klass7 = this.klass.SyntaxNode;
+                address0 = new klass7(text2, this._offset, elements2, labelled1);
+                this._offset += text2.length;
+            } else {
+                address0 = null;
+            }
+            if (address0) {
+                if (!(Fargo.Scheme.Vector instanceof Function)) {
+                    address0.extend(Fargo.Scheme.Vector);
+                }
+            } else {
+                this._offset = index1;
+            }
         }
         return this._nodeCache.vector[index0] = address0;
     },
@@ -2059,30 +2256,7 @@ Fargo.Scheme = new JS.Module("Fargo.Scheme", {
             if (address0) {
             } else {
                 this._offset = index1;
-                var slice2 = null;
-                if (this._input.length > this._offset) {
-                    slice2 = this._input.substring(this._offset, this._offset + 1);
-                } else {
-                    slice2 = null;
-                }
-                var temp0 = slice2;
-                var match0 = null;
-                if (match0 = temp0 && temp0.match(/^[()]/)) {
-                    var klass1 = this.klass.SyntaxNode;
-                    address0 = new klass1(match0[0], this._offset, []);
-                    this._offset += 1;
-                } else {
-                    address0 = null;
-                    var slice3 = null;
-                    if (this._input.length > this._offset) {
-                        slice3 = this._input.substring(this._offset, this._offset + 1);
-                    } else {
-                        slice3 = null;
-                    }
-                    if (!this.error || this.error.offset <= this._offset) {
-                        this.error = this.klass.lastError = {input: this._input, offset: this._offset, expected: "[()]", actual: slice3 || "<EOF>"};
-                    }
-                }
+                address0 = this.__consume__paren();
                 if (address0) {
                 } else {
                     this._offset = index1;
@@ -2095,6 +2269,41 @@ Fargo.Scheme = new JS.Module("Fargo.Scheme", {
             }
         }
         return this._nodeCache.delimiter[index0] = address0;
+    },
+    __consume__paren: function(input) {
+        var address0 = null;
+        var index0 = this._offset;
+        this._nodeCache.paren = this._nodeCache.paren || {};
+        var cached = this._nodeCache.paren[index0];
+        if (cached) {
+            this._offset += cached.textValue.length;
+            return cached;
+        }
+        var slice0 = null;
+        if (this._input.length > this._offset) {
+            slice0 = this._input.substring(this._offset, this._offset + 1);
+        } else {
+            slice0 = null;
+        }
+        var temp0 = slice0;
+        var match0 = null;
+        if (match0 = temp0 && temp0.match(/^[\(\)\[\]]/)) {
+            var klass0 = this.klass.SyntaxNode;
+            address0 = new klass0(match0[0], this._offset, []);
+            this._offset += 1;
+        } else {
+            address0 = null;
+            var slice1 = null;
+            if (this._input.length > this._offset) {
+                slice1 = this._input.substring(this._offset, this._offset + 1);
+            } else {
+                slice1 = null;
+            }
+            if (!this.error || this.error.offset <= this._offset) {
+                this.error = this.klass.lastError = {input: this._input, offset: this._offset, expected: "[\(\)\[\]]", actual: slice1 || "<EOF>"};
+            }
+        }
+        return this._nodeCache.paren[index0] = address0;
     },
     __consume__space: function(input) {
         var address0 = null;
