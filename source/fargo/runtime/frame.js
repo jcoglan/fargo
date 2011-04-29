@@ -19,9 +19,10 @@ Fargo.Runtime.extend({
       
       var proc = this._values.car;
       
-      if (proc.klass === Runtime.Syntax ||
-          proc.klass === Runtime.Macro ||
-          this._current === NULL) {
+      if (proc.klass === Runtime.Syntax || proc.klass === Runtime.Macro || this._current === NULL) {
+        
+        if (typeof proc.call !== 'function')
+          throw new Error('Invalid expression: ' + this._expression);
         
         this.complete = true;
         var result = proc.call(scope, this._values.cdr);

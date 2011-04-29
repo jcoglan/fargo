@@ -29,8 +29,11 @@ Fargo.Runtime.extend({
       if (expression.klass !== Fargo.Runtime.Cons)
         return Fargo.evaluate(expression, scope);
       
-      var proc   = Fargo.evaluate(expression.car, scope),
-          result = proc.call(scope, expression.cdr);
+      var proc = (expression !== NULL) && Fargo.evaluate(expression.car, scope);
+      if (typeof proc.call !== 'function')
+        throw new Error('Invalid expression: ' + expression);
+      
+      var result = proc.call(scope, expression.cdr);
       
       if (!result || result.klass !== Fargo.Runtime.Macro.Expansion)
         return result;
