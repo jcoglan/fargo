@@ -111,6 +111,10 @@ Fargo.runtime.define('pair?', function(object) {
   return object.klass === Cons && object !== NULL;
 });
 
+Fargo.runtime.define('vector?', function(object) {
+  return object.klass === Runtime.Vector;
+});
+
 Fargo.runtime.define('complex?', function(object) { return typeof object === 'number' });
 Fargo.runtime.define('string?',  function(object) { return typeof object === 'string' });
 
@@ -149,6 +153,8 @@ Fargo.runtime.define('number->string', function(number) {
 Fargo.runtime.define('string->number', function(string) {
   return parseFloat(string, 10);
 });
+
+Fargo.runtime.define('PI', Math.PI);
 
 //================================================================
 // Lists and pairs
