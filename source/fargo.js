@@ -54,8 +54,14 @@ Fargo.extend({
   },
   
   loadJavaScript: function(path) {
-    if (typeof require === 'function') require(path);
-    else eval(this.readFile(path));
+    if (typeof require === 'function') return require(path);
+    
+    var head = document.getElementsByTagName('head')[0],
+        script = document.createElement('script');
+    
+    script.type = 'text/javascript';
+    script.text = this.readFile(path);
+    head.appendChild(script);
   },
   
   readFile: function(path) {
