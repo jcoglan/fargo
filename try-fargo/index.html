@@ -28,19 +28,21 @@
     
     <div id="container">
       <div id="sidebar">
-        <h1>Fargo.</h1>
+        <h1>Fargo //</h1>
         
         <p>This is an experimental language I&rsquo;m working on to improve
           how we work with asynchronous systems in JavaScript. It runs on
           <a href="http://nodejs.org">Node.js</a> and in browsers. At this point
           it is very slow and likely full of bugs.</p>
         
-        <p>Its core is basically a modified Scheme. It has tail-recursion and
-          <tt>syntax-rules</tt> macros. It uses the core library from
-          <a href="http://github.com/jcoglan/heist">Heist</a>. The core data
-          types are booleans, numbers, symbols, strings, lists and vectors.</p>
+        <p>Its core is a modified R5RS Scheme. It has tail-recursion and
+          <tt>syntax-rules</tt> macros, and uses the core library from
+          <a href="http://github.com/jcoglan/heist">Heist</a>. Data types are
+          booleans <tt>#t</tt>/<tt>#f</tt>, numbers, symbols, strings, lists
+          <tt>(a b c)</tt> and vectors <tt>#(a b c)</tt>. Scheme quasiquoting
+          with <tt>'</tt>/<tt>`</tt>/<tt>,</tt>/<tt>,@</tt> is supported.</p>
         
-        <p>The main experiment here is that Fargo supports Ruby-style fibers for
+        <p>Instead of <tt>call/cc</tt>, Fargo supports Ruby-style fibers for
           pausing and resuming async work. You can find out more over on
           <a href="http://github.com/jcoglan/fargo">GitHub</a>.</p>
         
@@ -81,7 +83,7 @@
             }
           },
           
-          welcomeMessage:       'e.g. (alert "Hello, world!")',
+          welcomeMessage:       'Fargo ' + Fargo.VERSION + '\ne.g. (alert "Hello, world!")',
           animateScroll:        true,
           autofocus:            true,
           promptHistory:        true,

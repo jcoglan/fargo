@@ -39,6 +39,9 @@ a {
   font-weight: bold;
   text-decoration: none;
 }
+tt {
+  background: #f0f0f0;
+}
 .jquery-console-inner {
   background: #333;
   color: #b3dc47;

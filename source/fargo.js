@@ -1,6 +1,8 @@
 Fargo = new JS.Module('Fargo');
 
 Fargo.extend({
+  VERSION: '0.0.1-preview',
+  
   Runtime: new JS.Class({
     initialize: function() {
       this.stack = new this.klass.Stackless();
