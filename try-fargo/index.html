@@ -30,23 +30,23 @@
       <div id="sidebar">
         <h1>Fargo //</h1>
         
-        <p>This is an experimental language I&rsquo;m working on to improve
-          how we work with asynchronous systems in JavaScript. It runs on
-          <a href="http://nodejs.org">Node.js</a> and in browsers. At this point
-          it is very slow and likely full of bugs.</p>
+        <p>An experimental language to improve how we work with asynchronous
+          systems in JavaScript. It runs on <a href="http://nodejs.org">Node.js</a>
+          and in browsers.</p>
         
         <p>Its core is a modified R5RS Scheme. It has tail-recursion and
           <tt>syntax-rules</tt> macros, and uses the core library from
           <a href="http://github.com/jcoglan/heist">Heist</a>. Data types are
           booleans <tt>#t</tt>/<tt>#f</tt>, numbers, symbols, strings, lists
-          <tt>(a b c)</tt> and vectors <tt>#(a b c)</tt>. Scheme quasiquoting
-          with <tt>'</tt>/<tt>`</tt>/<tt>,</tt>/<tt>,@</tt> is supported.</p>
+          <tt>(a b c)</tt> and vectors <tt>#(a b c)</tt>. Quasiquoting with
+          <tt>'</tt>/<tt>`</tt>/<tt>,</tt>/<tt>,@</tt> is supported.</p>
         
         <p>Instead of <tt>call/cc</tt>, Fargo supports Ruby-style fibers for
-          pausing and resuming async work. You can find out more over on
+          pausing and resuming async work. View source for an example using
+          <tt>set-timeout</tt>. You can find out more over on
           <a href="http://github.com/jcoglan/fargo">GitHub</a>.</p>
         
-        <p>View source for a fiber example using timeouts.</p>
+        <p><tt>(download "0.0.1-preview")</tt></p>
         
         <p>MIT licensed, &copy; 2011 <a href="http://jcoglan.com">James Coglan</a>.</p>
       </div>
@@ -58,9 +58,15 @@
       JS.require('jQuery.fn.console', 'Fargo', function() {
         
         var runtime = new Fargo.Runtime();
+        
         runtime.define('alert', function(message) {
           alert(message);
           return message;
+        });
+        
+        runtime.define('download', function(version) {
+          window.location = '/downloads/fargo-' + version + '.zip';
+          return true;
         });
         
         var OPTIONS = {
