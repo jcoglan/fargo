@@ -9,16 +9,16 @@ Fargo.Runtime.extend({
       }
       
       var runtime = this._scope.runtime,
-          fiber   = R.Fiber.current,
+          fiber   = runtime.currentFiber,
           stack   = runtime.stack;
       
-      R.Fiber.current = this;
+      runtime.currentFiber = this;
       runtime.stack = this._stack;
       
       var arg   = (args[0] === undefined) ? NULL : args[0],
           value = runtime.stack.resume(arg);
       
-      R.Fiber.current = fiber;
+      runtime.currentFiber = fiber;
       runtime.stack = stack;
       
       return value;

@@ -61,7 +61,9 @@ Fargo.runtime.syntax('fiber', function(scope, cells) {
   return new Runtime.Fiber(scope, cells.car, cells.cdr);
 });
 
-Fargo.runtime.define('current-fiber', function() { return Runtime.Fiber.current });
+Fargo.runtime.syntax('current-fiber', function(scope, cells) {
+  return scope.runtime.currentFiber;
+});
 
 Fargo.runtime.define('yield', function(value) {
   value = (value === undefined) ? NULL : value;
