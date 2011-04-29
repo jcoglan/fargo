@@ -30,7 +30,7 @@ Fargo.Runtime.extend({
         }
         
         if (klass === Fargo.Runtime.Vector) {
-          elements = pattern._elements;
+          elements = pattern.members;
           i = elements.length;
           while (i--) this.patternVars(elements[i], excluded, results);
         }
@@ -115,7 +115,7 @@ Fargo.Runtime.extend({
         
         inputIndex = 0;
         
-        var elements = pattern._elements;
+        var elements = pattern.members;
         for (var i = 0, n = elements.length; i < n; i++) {
           token = elements[i];
           if (this.klass.ELLIPSIS.equals(token)) continue;

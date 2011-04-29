@@ -61,7 +61,7 @@ Fargo.Runtime.Macro.extend({
         result = [];
         push = function(value) { result.push(value) };
         
-        var elements = template._elements;
+        var elements = template.members;
         for (var i = 0, n = elements.length; i < n; i++) {
           cell = elements[i];
           

@@ -183,18 +183,18 @@ Fargo.runtime.define('make-vector', function(size, fill) {
 });
 
 Fargo.runtime.define('vector-length', function(vector) {
-  return vector._elements.length;
+  return vector.members.length;
 });
 
 Fargo.runtime.define('vector-ref', function(vector, k) {
-  var size = vector._elements.length;
+  var size = vector.members.length;
   if (k < 0 || k >= size) throw new Error('Index out of bounds');
-  return vector._elements[k];
+  return vector.members[k];
 });
 
 Fargo.runtime.define('vector-set!', function(vector, k, object) {
-  var size = vector._elements.length;
+  var size = vector.members.length;
   if (k < 0 || k >= size) throw new Error('Index out of bounds');
   if (vector.frozen) throw new Error('Cannot vector-set! on immutable vector');
-  return vector._elements[k] = object;
+  return vector.members[k] = object;
 });
