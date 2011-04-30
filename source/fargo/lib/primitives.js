@@ -124,19 +124,35 @@ Fargo.runtime.define('symbol?', function(object) {
 });
 
 Fargo.runtime.define('procedure?', function(object) {
-  return object.klass === Runtime.Function
+  return object.klass === Runtime.Function;
 });
 
 //================================================================
 // Math library
 
-Fargo.runtime.define('+', function(a,b) { return a + b });
-Fargo.runtime.define('*', function(a,b) { return a * b });
-Fargo.runtime.define('/', function(a,b) { return a / b });
+Fargo.runtime.define('+', function() {
+  var value = arguments[0];
+  for (var i = 1, n = arguments.length; i < n; i++) value += arguments[i];
+  return value;
+});
 
-Fargo.runtime.define('-', function(a,b) {
-  if (arguments.length === 1) return 0 - a;
-  return a - b;
+Fargo.runtime.define('-', function() {
+  var value = arguments[0];
+  if (arguments.length === 1) return 0 - value;
+  for (var i = 1, n = arguments.length; i < n; i++) value -= arguments[i];
+  return value;
+});
+
+Fargo.runtime.define('*', function() {
+  var value = arguments[0];
+  for (var i = 1, n = arguments.length; i < n; i++) value *= arguments[i];
+  return value;
+});
+
+Fargo.runtime.define('/', function() {
+  var value = arguments[0];
+  for (var i = 1, n = arguments.length; i < n; i++) value /= arguments[i];
+  return value;
 });
 
 Fargo.runtime.define('<',  function(a,b) { return a <  b });
