@@ -12,6 +12,17 @@ Fargo.Runtime.extend({
         block.call(context, this.members[i]);
     },
     
+    equals: function(other) {
+      if (!other || other.klass !== this.klass) return false;
+      if (other.length !== this.length) return false;
+      var i = this.length;
+      while (i--) {
+        if (!JS.Enumerable.areEqual(this.members[i], other.members[i]))
+          return false;
+      }
+      return true;
+    },
+    
     get: function(index) {
       return this.members[index];
     },
