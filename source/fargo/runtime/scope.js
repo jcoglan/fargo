@@ -52,6 +52,7 @@ Fargo.Runtime.extend({
           scope   = new Fargo.Runtime.FileScope(fqpath, this.runtime, this);
       
       Fargo.runtime = this.runtime;
+      if (!/\.[^\.\/]+$/.test(fqpath)) fqpath += '.scm';
       
       if (/\.js$/i.test(fqpath)) {
         Fargo.loadJavaScript(fqpath);
