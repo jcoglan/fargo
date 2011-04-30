@@ -75,13 +75,20 @@
           },
           
           commandHandle: function(line) {
-            var program = Fargo.SchemeParser.parse(line),
+            var parser  = new Fargo.SchemeParser(line),
+                program = parser.parse(),
                 result;
             
-            if (!program) return fargoConsole.continuedPrompt = true;
+            if (!program) {
+              if (parser.error.actual === '<EOF>')
+                return fargoConsole.continuedPrompt = true;
+              
+              return Fargo.SchemeParser.formatError(parser.error);
+            }
+            
             try {
               result = program.eval(runtime.scope);
-              return result === undefined ? '' : '=> ' + Fargo.stringify(result);
+              return result === undefined ? '' : '; => ' + Fargo.stringify(result);
             } catch (e) {
               return e.toString();
             } finally {
@@ -95,7 +102,7 @@
           promptHistory:        true,
           promptLabel:          '> ',
           continuedPrompt:      true,
-          continuedPromptLabel: '* '
+          continuedPromptLabel: '  '
         };
         
         window.fargoConsole = jQuery('#fargo-console').console(OPTIONS);

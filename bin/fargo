@@ -25,13 +25,25 @@ if (filename = process.ARGV[2]) {
   readline.addListener('line', function(line) {
     buffer += line;
     
-    var program = Fargo.SchemeParser.parse(buffer);
-    if (!program) return readline.prompt();
+    var parser  = new Fargo.SchemeParser(buffer),
+        program = parser.parse();
+    
+    if (!program) {
+      if (parser.error.actual !== '<EOF>') {
+        buffer = '';
+        readline.setPrompt('> ');
+        sys.puts(Fargo.SchemeParser.formatError(parser.error));
+      } else {
+        readline.setPrompt('  ');
+      }
+      return readline.prompt();
+    }
     
     buffer = '';
+    readline.setPrompt('> ');
     try {
       var result = program.eval(runtime.scope);
-      sys.puts('=> ' + Fargo.stringify(result));
+      sys.puts('; => ' + Fargo.stringify(result));
     } catch (e) {
       sys.puts(e);
     }
