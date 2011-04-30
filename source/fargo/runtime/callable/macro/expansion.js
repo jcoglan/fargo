@@ -18,7 +18,7 @@ Fargo.Runtime.Macro.extend({
       if (klass === Cons) {
         if (template === NULL) return NULL;
         
-        if (template.car === ELLIPSIS)
+        if (ELLIPSIS.equals(template.car))
           return this.expand(template.cdr.car, matches, depth, true);
         
         templatePair = template;
