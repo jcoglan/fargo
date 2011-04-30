@@ -180,6 +180,35 @@ Fargo.runtime.define('set-cdr!', function(pair, value) {
   return value;
 });
 
+Fargo.runtime.define('caar',   function(pair) { return pair.car.car });
+Fargo.runtime.define('cadr',   function(pair) { return pair.cdr.car });
+Fargo.runtime.define('cdar',   function(pair) { return pair.car.cdr });
+Fargo.runtime.define('cddr',   function(pair) { return pair.cdr.cdr });
+Fargo.runtime.define('caaar',  function(pair) { return pair.car.car.car });
+Fargo.runtime.define('caadr',  function(pair) { return pair.cdr.car.car });
+Fargo.runtime.define('cadar',  function(pair) { return pair.car.cdr.car });
+Fargo.runtime.define('caddr',  function(pair) { return pair.cdr.cdr.car });
+Fargo.runtime.define('cdaar',  function(pair) { return pair.car.car.cdr });
+Fargo.runtime.define('cdadr',  function(pair) { return pair.cdr.car.cdr });
+Fargo.runtime.define('cddar',  function(pair) { return pair.car.cdr.cdr });
+Fargo.runtime.define('cdddr',  function(pair) { return pair.cdr.cdr.cdr });
+Fargo.runtime.define('caaaar', function(pair) { return pair.car.car.car.car });
+Fargo.runtime.define('caaadr', function(pair) { return pair.cdr.car.car.car });
+Fargo.runtime.define('caadar', function(pair) { return pair.car.cdr.car.car });
+Fargo.runtime.define('caaddr', function(pair) { return pair.cdr.cdr.car.car });
+Fargo.runtime.define('cadaar', function(pair) { return pair.car.car.cdr.car });
+Fargo.runtime.define('cadadr', function(pair) { return pair.cdr.car.cdr.car });
+Fargo.runtime.define('caddar', function(pair) { return pair.car.cdr.cdr.car });
+Fargo.runtime.define('cadddr', function(pair) { return pair.cdr.cdr.cdr.car });
+Fargo.runtime.define('cdaaar', function(pair) { return pair.car.car.car.cdr });
+Fargo.runtime.define('cdaadr', function(pair) { return pair.cdr.car.car.cdr });
+Fargo.runtime.define('cdadar', function(pair) { return pair.car.cdr.car.cdr });
+Fargo.runtime.define('cdaddr', function(pair) { return pair.cdr.cdr.car.cdr });
+Fargo.runtime.define('cddaar', function(pair) { return pair.car.car.cdr.cdr });
+Fargo.runtime.define('cddadr', function(pair) { return pair.cdr.car.cdr.cdr });
+Fargo.runtime.define('cdddar', function(pair) { return pair.car.cdr.cdr.cdr });
+Fargo.runtime.define('cddddr', function(pair) { return pair.cdr.cdr.cdr.cdr });
+
 Fargo.runtime.define('apply', function(procedure, list) {
   return procedure.apply(list.toArray());
 });
