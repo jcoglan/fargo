@@ -130,9 +130,13 @@ Fargo.runtime.define('procedure?', function(object) {
 // Math library
 
 Fargo.runtime.define('+', function(a,b) { return a + b });
-Fargo.runtime.define('-', function(a,b) { return a - b });
 Fargo.runtime.define('*', function(a,b) { return a * b });
 Fargo.runtime.define('/', function(a,b) { return a / b });
+
+Fargo.runtime.define('-', function(a,b) {
+  if (arguments.length === 1) return 0 - a;
+  return a - b;
+});
 
 Fargo.runtime.define('<',  function(a,b) { return a <  b });
 Fargo.runtime.define('<=', function(a,b) { return a <= b });
