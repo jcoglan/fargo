@@ -22,16 +22,20 @@ if (filename = process.ARGV[2]) {
   var readline = rl.createInterface(process.stdin, process.stdout),
       buffer   = '';
   
+  var reset = function() {
+    buffer = '';
+    readline.setPrompt('> ');
+  };
+  
   readline.addListener('line', function(line) {
-    buffer += line;
+    buffer += (buffer === '' ? '' : '\n') + line;
     
     var parser  = new Fargo.SchemeParser(buffer),
         program = parser.parse();
     
     if (!program) {
       if (parser.error.actual !== '<EOF>') {
-        buffer = '';
-        readline.setPrompt('> ');
+        reset();
         sys.puts(Fargo.SchemeParser.formatError(parser.error));
       } else {
         readline.setPrompt('  ');
@@ -39,8 +43,7 @@ if (filename = process.ARGV[2]) {
       return readline.prompt();
     }
     
-    buffer = '';
-    readline.setPrompt('> ');
+    reset();
     try {
       var result = program.eval(runtime.scope);
       sys.puts('; => ' + Fargo.stringify(result));
@@ -55,7 +58,7 @@ if (filename = process.ARGV[2]) {
     if (buffer.length === 0) {
       readline.close();
     } else {
-      buffer = '';
+      reset();
       sys.puts('');
       readline.prompt();
     }

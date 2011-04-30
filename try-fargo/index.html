@@ -83,6 +83,7 @@
               if (parser.error.actual === '<EOF>')
                 return fargoConsole.continuedPrompt = true;
               
+              fargoConsole.continuedPrompt = false;
               return Fargo.SchemeParser.formatError(parser.error);
             }
             
