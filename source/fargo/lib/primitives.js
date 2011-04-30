@@ -29,7 +29,8 @@ Fargo.runtime.syntax('set!', function(scope, cells) {
 
 Fargo.runtime.syntax('if', function(scope, cells) {
   var which = Fargo.evaluate(cells.car, scope) ? cells.cdr.car : cells.cdr.cdr.car;
-  return new Runtime.Frame(which, scope);
+  if (which === undefined) return false;
+  else return new Runtime.Frame(which, scope);
 });
 
 Fargo.runtime.syntax('begin', function(scope, cells) {
