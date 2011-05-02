@@ -134,7 +134,7 @@ Fargo.runtime.define('procedure?', function(object) {
 // Math library
 
 Fargo.runtime.define('+', function() {
-  var value = arguments[0];
+  var value = arguments[0] || 0;
   for (var i = 1, n = arguments.length; i < n; i++) value += arguments[i];
   return value;
 });
@@ -147,13 +147,14 @@ Fargo.runtime.define('-', function() {
 });
 
 Fargo.runtime.define('*', function() {
-  var value = arguments[0];
+  var value = arguments[0] || 1;
   for (var i = 1, n = arguments.length; i < n; i++) value *= arguments[i];
   return value;
 });
 
 Fargo.runtime.define('/', function() {
   var value = arguments[0];
+  if (arguments.length === 1) return 1/value;
   for (var i = 1, n = arguments.length; i < n; i++) value /= arguments[i];
   return value;
 });
