@@ -28,7 +28,10 @@ Fargo.runtime.syntax('set!', function(scope, cells) {
 });
 
 Fargo.runtime.syntax('if', function(scope, cells) {
-  var which = Fargo.evaluate(cells.car, scope) ? cells.cdr.car : cells.cdr.cdr.car;
+  var which = (Fargo.evaluate(cells.car, scope) === false)
+            ? cells.cdr.cdr.car
+            : cells.cdr.car;
+  
   if (which === undefined) return false;
   else return new Runtime.Frame(which, scope);
 });
