@@ -1,5 +1,4 @@
-.DS_Store
-.redcar
+Gemfile.lock
 build
 try-fargo/javascripts/fargo
 try-fargo/downloads
